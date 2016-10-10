@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="@color/abc_input_method_navigation_guard"
+    android:id="@+id/edit_texts">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:textColor="#ffffff"
+        android:hint="Tytuł*"
+        android:textColorHint="#686464" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/author"
+        android:textColor="#ffffff"
+        android:singleLine="false"
+        android:hint="Nazwisko i imię autora*"
+        android:textColorHint="#686464" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/year"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:singleLine="false"
+        android:hint="Data wydania"
+        android:textColorHint="#686464" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/desc"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:singleLine="false"
+        android:textColorHint="#686464"
+        android:hint="Opis" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cycle"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:textColorHint="#686464"
+        android:hint="Cykl" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/genre"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:textColorHint="#686464"
+        android:hint="Gatunek" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zapisz"
+        android:id="@+id/button4"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

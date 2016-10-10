@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string-array name="search_array">
+        <item>Tytuł</item>
+        <item>Autor</item>
+        <item>Rok wydania</item>
+        <item>Cykl</item>
+        <item>Gatunek</item>
+    </string-array>
+
+</resources>
