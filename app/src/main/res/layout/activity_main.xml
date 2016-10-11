@@ -20,7 +20,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:minHeight="65dp"
+        android:background="@android:drawable/dialog_holo_dark_frame"
+        android:textColor="@android:color/background_light" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,7 +34,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button" />
+        android:layout_alignEnd="@+id/button"
+        android:minHeight="65dp"
+        android:background="@android:drawable/dialog_holo_dark_frame"
+        android:textColor="@android:color/background_light" />
 
     <Button
         android:layout_width="wrap_content"
@@ -42,6 +48,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:elevation="0dp"
+        android:minHeight="65dp"
+        android:background="@android:drawable/dialog_holo_dark_frame"
+        android:textColor="@android:color/background_light" />
 
 </RelativeLayout>

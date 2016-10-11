@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         show_all_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ShowAll.class);
+                Intent intent = new Intent(getApplicationContext(), ShowResults.class);
                 startActivity(intent);
             }
         });

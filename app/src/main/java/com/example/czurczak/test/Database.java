@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,27 +43,25 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void ShowAll(TextView txt){
+    public Cursor ShowAll(){
         String[] kolumny = {"id","Tytuł", "Autor", "Rok_wydania", "Opis", "Cykl", "Okładka", "Gatunek"};
         //List<String> kolumny = new LinkedList<String>();
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor k = db.query("Ksiazki", kolumny, null, null, null, null, null); //rawQuery("Select * from Ksiazki",null);
-        k.moveToFirst();
-        txt.setText("");
-        while(k.moveToNext()){
-            int id = k.getInt(0);
-            String title = k.getString(1);
-            String author = k.getString(2);
-            int year = k.getInt(3);
-            String desc = k.getString(4);
-            String cycle = k.getString(5);
-            String cover = k.getString(6);
-            String type = k.getString(7);
-            txt.setText(txt.getText() + "\n" + id + " | " + title + " | " +  author + " | " +
-                    year + " | " +  desc + " | " + cycle + " | " + cover + " | " + type +"\n");
-        }
-        k.close();
+
+        return k;
+    }
+
+    public Cursor ShowSelected (String spinner, String text){
+        Cursor k;
+        SQLiteDatabase db = getReadableDatabase();
+        String[] args = new String[1];
+        args[0] = "%" + text + "%";
+        if(spinner.equals("Rok wydania")) spinner = "Rok_wydania";
+        String slctQuery = "SELECT * FROM Ksiazki WHERE " + spinner + " ";
+        k = db.rawQuery(slctQuery + "LIKE ?", args);
+        return k;
     }
 
     public void AddBook(String title,  String author, int year, String desc,  String cycle, String cover, String type){
