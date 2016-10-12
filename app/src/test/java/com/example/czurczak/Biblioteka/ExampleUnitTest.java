@@ -1,4 +1,4 @@
-package com.example.czurczak.test;
+package com.example.czurczak.Biblioteka;
 
 import org.junit.Test;
 

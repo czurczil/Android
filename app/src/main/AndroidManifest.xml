@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.czurczak.test">
+    package="com.example.czurczak.Biblioteka">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Biblioteka"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.czurczak.Biblioteka.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowResults"></activity>
-        <activity android:name=".AddOne"></activity>
-        <activity android:name=".Search"></activity>
+        <activity android:name="com.example.czurczak.Biblioteka.ShowResults"></activity>
+        <activity android:name="com.example.czurczak.Biblioteka.AddOne"></activity>
+        <activity android:name="com.example.czurczak.Biblioteka.Search"></activity>
     </application>
 
 </manifest>

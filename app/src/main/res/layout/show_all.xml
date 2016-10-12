@@ -1,15 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@android:color/background_dark">
 
     <TextView
+        android:text="Tytuł"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="40dp"
+        android:id="@+id/tvTitle"
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp" />
+
+    <TextView
+        android:text="Autor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/tvAuthor"
+        android:textColor="@android:color/background_light"
+        android:layout_below="@+id/tvTitle"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp" />
+
+    <TextView
+        android:text="Rok wydania"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAuthor"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:id="@+id/tvYear"
+        android:textColor="@android:color/background_light" />
+
+
+
+    <TextView
+        android:text="Opis"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:scrollbars = "vertical"
-        android:id="@+id/textView"
-        android:textColor="#ffffff"
-        android:background="@color/abc_input_method_navigation_guard" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDesc"
+        android:layout_below="@+id/imgCover"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp" />
+
+    <TextView
+        android:text="Cykl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvGenre"
+        android:layout_toRightOf="@+id/imgCover"
+        android:layout_toEndOf="@+id/imgCover"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:id="@+id/tvCycle"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:text="Gatunek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvGenre"
+        android:layout_above="@+id/tvDesc"
+        android:layout_toRightOf="@+id/tvYear"
+        android:layout_toEndOf="@+id/tvYear"
+        android:textColor="@android:color/background_light" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="26dp"
+        android:adjustViewBounds="false"
+        android:background="#fff"
+        android:id="@+id/imgCover"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tvID"
+        android:text="ID"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp" />
+
+</RelativeLayout>

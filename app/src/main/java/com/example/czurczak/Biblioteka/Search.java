@@ -1,4 +1,4 @@
-package com.example.czurczak.test;
+package com.example.czurczak.Biblioteka;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by czurczak on 22.09.2016.
@@ -22,11 +21,12 @@ public class Search extends AppCompatActivity implements AdapterView.OnItemSelec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
+
         final EditText phrase = (EditText)findViewById(R.id.editText);
 
 
         final Database db = new Database(this);
-
+        //db.UpdateBook(1);
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

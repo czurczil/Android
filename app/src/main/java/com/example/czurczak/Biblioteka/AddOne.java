@@ -1,4 +1,4 @@
-package com.example.czurczak.test;
+package com.example.czurczak.Biblioteka;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

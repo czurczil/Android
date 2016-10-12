@@ -20,9 +20,11 @@
         android:id="@+id/editText"
         android:textSize="20sp"
         android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
+        android:textColorHint="#686464"
         android:inputType="none"
-        android:hint="Szukana fraza" />
+        android:singleLine="true"
+        android:hint="Szukana fraza"
+        tools:ignore="Deprecated" />
 
     <Button
         android:text="OK"
