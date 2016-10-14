@@ -2,98 +2,111 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@android:color/background_dark">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imgCover"
+        android:layout_alignTop="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
+        android:background="@android:color/background_light" />
 
     <TextView
-        android:text="Tytuł"
+        android:text="ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="40dp"
-        android:id="@+id/tvTitle"
-        android:textColor="@android:color/background_light"
-        android:textSize="30sp" />
-
-    <TextView
-        android:text="Autor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:id="@+id/tvAuthor"
-        android:textColor="@android:color/background_light"
-        android:layout_below="@+id/tvTitle"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp" />
-
-    <TextView
-        android:text="Rok wydania"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAuthor"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:id="@+id/tvYear"
+        android:id="@+id/tvID"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:textColor="@android:color/background_light" />
-
-
 
     <TextView
         android:text="Opis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvDesc"
-        android:layout_below="@+id/imgCover"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:textColor="@android:color/background_light"
-        android:textSize="20sp" />
-
-    <TextView
-        android:text="Cykl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tvGenre"
-        android:layout_toRightOf="@+id/imgCover"
-        android:layout_toEndOf="@+id/imgCover"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
-        android:id="@+id/tvCycle"
-        android:textColor="@android:color/background_light" />
-
-    <TextView
-        android:text="Gatunek"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvGenre"
-        android:layout_above="@+id/tvDesc"
-        android:layout_toRightOf="@+id/tvYear"
-        android:layout_toEndOf="@+id/tvYear"
-        android:textColor="@android:color/background_light" />
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="26dp"
-        android:adjustViewBounds="false"
-        android:background="#fff"
-        android:id="@+id/imgCover"
-        android:layout_alignParentTop="true"
+        android:textSize="20sp"
+        android:layout_below="@+id/imgCover"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tvDesc"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tvID"
-        android:text="ID"
-        android:textColor="@android:color/background_light"
-        android:textSize="20sp" />
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_alignTop="@+id/imgCover"
+        android:layout_toRightOf="@+id/imgCover"
+        android:layout_toEndOf="@+id/imgCover">
+
+        <TextView
+            android:text="Tytuł"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTitle"
+            android:textSize="30sp"
+            android:textColor="@android:color/background_light"
+            android:textAlignment="center" />
+
+        <TextView
+            android:text="Autor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvAuthor"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:text="Rok wydania"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvYear"
+            android:textColor="@android:color/background_light"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Cykl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCycle"
+                android:layout_weight="1"
+                android:textColor="@android:color/background_light"
+                android:textAlignment="viewStart" />
+
+            <TextView
+                android:text="Gatunek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvGenre"
+                android:layout_weight="1"
+                android:textColor="@android:color/background_light"
+                android:textAlignment="viewEnd" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
