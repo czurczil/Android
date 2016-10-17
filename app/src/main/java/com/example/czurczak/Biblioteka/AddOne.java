@@ -18,6 +18,7 @@ public class AddOne extends AppCompatActivity {
 
         final Database db = new Database(this);
 
+        final EditText cover = (EditText) findViewById(R.id.cover);
         final EditText title = (EditText) findViewById(R.id.title);
         final EditText author = (EditText) findViewById(R.id.author);
         final EditText year = (EditText) findViewById(R.id.year);
@@ -36,6 +37,7 @@ public class AddOne extends AppCompatActivity {
                             Integer.parseInt((year.getText()).toString()),
                             (description.getText()).toString(),
                             (cycle.getText()).toString(),
+                            (cover.getText()).toString(),
                             (genre.getText()).toString());
                     Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                 }

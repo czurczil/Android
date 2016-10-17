@@ -74,6 +74,17 @@
         android:singleLine="true"
         android:hint="Gatunek" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:ems="10"
+        android:id="@+id/cover"
+        android:hint="Nazwa okładki"
+        android:textColor="@android:color/white"
+        android:textColorHint="#686464"
+        android:singleLine="true" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

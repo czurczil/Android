@@ -21,36 +21,15 @@ public class ShowResults extends AppCompatActivity {
         ListView myList = (ListView)findViewById(R.id.db_listview);
         myList.setAdapter(ListViewLayout());
 
-
-        /*TextView txt = (TextView)findViewById(R.id.textView);
-        txt.setMovementMethod(new ScrollingMovementMethod());
-
-        Database db = new Database(this);
-        Cursor k = db.ShowAll();
-        k.move(0);
-        txt.setText("");
-        while(k.moveToNext()){
-            int id = k.getInt(0);
-            String title = k.getString(1);
-            String author = k.getString(2);
-            int year = k.getInt(3);
-            String desc = k.getString(4);
-            String cycle = k.getString(5);
-            String cover = k.getString(6);
-            String type = k.getString(7);
-            txt.setText(txt.getText() + "\n" + id + " | " + title + " | " +  author + " | " +
-                    year + " | " +  desc + " | " + cycle + " | " + cover + " | " + type +"\n");
-        }
-        k.close();*/
     }
 
     private SimpleCursorAdapter ListViewLayout(){
-        Database db = new Database(this);
+        final Database db = new Database(this);
 
         Cursor cursor = db.ShowAll();
         //mapping from cursor to view fields
         String[] fromColNames = new String[] {
-                "_id",
+                db.KEY_ID,
                 db.KEY_TITLE,
                 db.KEY_AUTHOR,
                 db.KEY_YEAR,
@@ -80,12 +59,14 @@ public class ShowResults extends AppCompatActivity {
         myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Cursor cursor, int colIndex) {
-                String name = cursor.getString(colIndex);
-                if (view.getId() == R.id.imgCover && name != null) {
-                    ImageView IV=(ImageView) view;
-                    String pack =  getApplicationContext().getPackageName();
+                //String name = cursor.getString(colIndex);
+                if (view.getId() == R.id.imgCover ) {
+                    /*ImageView IV=(ImageView) view;                                                            Commented section
+                    String pack =  getApplicationContext().getPackageName();                                    set cover src to drawable
                     int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
-                    IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));
+                    IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));*/
+
+                    ((ImageView) view).setImageBitmap(db.GetImage(cursor));
                     return true;
                 }
                 return false;

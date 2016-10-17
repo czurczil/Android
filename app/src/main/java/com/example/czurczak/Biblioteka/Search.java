@@ -29,17 +29,6 @@ public class Search extends AppCompatActivity implements AdapterView.OnItemSelec
 
 
         final Database db = new Database(this);
-        //db.UpdateBook(1);
-        db.SaveImage();
-        final Button img = (Button)findViewById(R.id.getIMG);
-        final ImageView imVw = (ImageView)findViewById(R.id.imageView) ;
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imVw.setImageBitmap(db.GetImage());
-            }
-        });
-
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -71,10 +60,10 @@ public class Search extends AppCompatActivity implements AdapterView.OnItemSelec
                     int year = k.getInt(3);
                     String desc = k.getString(4);
                     String cycle = k.getString(5);
-                    String cover = k.getString(6);
+                    //String cover = k.getString(6);
                     String type = k.getString(7);
                     text.setText(text.getText() + "\n" + id + " | " + title + " | " +  author + " | " +
-                            year + " | " +  desc + " | " + cycle + " | " + cover + " | " + type +"\n");
+                            year + " | " +  desc + " | " + cycle  + " | " + type +"\n");
                 }
                 k.close();
             }

@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Blob;
 
 /**
  * Created by czurczak on 12.09.2016.
@@ -27,7 +28,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Biblioteka.db";
     private static final String TABLE_NAME = "Ksiazki";
 
-    public static final String KEY_ID = "id";
+    public static final String KEY_ID = "_id";
     public static final String KEY_TITLE = "Tytuł";
     public static final String KEY_AUTHOR = "Autor";
     public static final String KEY_YEAR = "Rok_wydania";
@@ -39,13 +40,13 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE table Ksiazki (" +
-                "id integer primary key autoincrement," +
+                "_id integer primary key autoincrement," +
                 "Tytuł text," +
                 "Autor text," +
                 "Rok_wydania integer," +
                 "Opis text," +
                 "Cykl text," +
-                "Okładka text," +
+                "Okładka blob," +
                 "Gatunek text" +
                 ");");
     }
@@ -62,8 +63,8 @@ public class Database extends SQLiteOpenHelper {
         //String[] kolumny = {KEY_ID, KEY_TITLE, KEY_AUTHOR, KEY_YEAR, KEY_DESC, KEY_CYKLE, KEY_COVER, KEY_GENRE};
         //Cursor cursor = db.query(TABLE_NAME, kolumny, null, null, null, null, null); //
 
-        String newID = "_id";
-        String slctQuery = "SELECT " + KEY_ID + " AS " + newID + ", " + KEY_TITLE + ", " + KEY_AUTHOR + ", " + KEY_YEAR + ", "
+        //String newID = "_id";
+        String slctQuery = "SELECT " + KEY_ID  + ", " + KEY_TITLE + ", " + KEY_AUTHOR + ", " + KEY_YEAR + ", "
                 + KEY_DESC + ", " + KEY_CYKLE + ", " + KEY_COVER + ", " + KEY_GENRE + " FROM " + TABLE_NAME;
        /* String slctQuery = "SELECT " + KEY_ID + " AS " + newID + ", " + KEY_TITLE + ", " + KEY_AUTHOR + ", " + KEY_YEAR + ", "
                 + KEY_DESC + ", " + KEY_CYKLE + ", " + KEY_COVER + ", " + KEY_GENRE + " FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=1";*/
@@ -92,9 +93,10 @@ public class Database extends SQLiteOpenHelper {
         values.put(KEY_YEAR, year);
         values.put(KEY_DESC, desc);
         values.put(KEY_CYKLE, cycle);
-        values.put(KEY_COVER, cover);
+        values.put(KEY_COVER, SaveImage(cover));
         values.put(KEY_GENRE, type);
         db.insert(TABLE_NAME, null, values);
+
     }
     public void AddBook(String title,  String author, int year, String desc,  String cycle, String type){
         SQLiteDatabase db = getWritableDatabase();
@@ -144,36 +146,35 @@ public class Database extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, values);
     }
 
-    public void SaveImage(){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("Create table if not exists tb (image blob)");
-        //String path = "C:\\Users\\czurczak\\Desktop\\180c50d773.jpg";
+    public byte[] SaveImage(String path){
+        //SQLiteDatabase db = getWritableDatabase();
         String extr = Environment.getExternalStorageDirectory().toString();
         try{
-            FileInputStream im = new FileInputStream(extr + "/" + "180c50d773.jpg");
+            FileInputStream im = new FileInputStream(extr + "/Biblioteka/covers/" + path);
             byte[] image = new byte[im.available()];
             im.read(image);
-            ContentValues values = new ContentValues();
-            values.put("image", image);
-            db.insert("tb", null, values);
+            //ContentValues values = new ContentValues();
+            //values.put(KEY_COVER, image);
+            //db.insert(TABLE_NAME, null, values);
             im.close();
+            return image;
         }
         catch (IOException e){
             e.printStackTrace();
         }
+        return null;
     }
-    public Bitmap GetImage(){
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("Select * From tb", null);
+    public Bitmap GetImage(Cursor c){
+/*        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("Select " + KEY_COVER + " From " + TABLE_NAME, null);
         c.move(0);
-        if(c.moveToNext()){
-            byte[] image = c.getBlob(0);
+        if(c.moveToNext()){*/
+            byte[] image = c.getBlob(6);
             Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 
             return bmp;
-        }
-        else return null;
     }
+
     public void DeleteBook(int id){
         SQLiteDatabase db = getWritableDatabase();
         String[] ksiazki = {""+id};
