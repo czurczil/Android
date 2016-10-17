@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -75,6 +77,20 @@ public class ShowResults extends AppCompatActivity {
                 fromColNames,
                 toViewIDs
         );
+        myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int colIndex) {
+                String name = cursor.getString(colIndex);
+                if (view.getId() == R.id.imgCover && name != null) {
+                    ImageView IV=(ImageView) view;
+                    String pack =  getApplicationContext().getPackageName();
+                    int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
+                    IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return myCursorAdapter;
     }

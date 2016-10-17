@@ -9,8 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 /**
  * Created by czurczak on 22.09.2016.
@@ -27,6 +30,17 @@ public class Search extends AppCompatActivity implements AdapterView.OnItemSelec
 
         final Database db = new Database(this);
         //db.UpdateBook(1);
+        db.SaveImage();
+        final Button img = (Button)findViewById(R.id.getIMG);
+        final ImageView imVw = (ImageView)findViewById(R.id.imageView) ;
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imVw.setImageBitmap(db.GetImage());
+            }
+        });
+
+
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

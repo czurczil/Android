@@ -4,30 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000">
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/imgCover"
-        android:layout_alignTop="@+id/linearLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:background="@android:color/background_light" />
-
-    <TextView
-        android:text="ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvID"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="@android:color/background_light" />
+    android:background="@android:drawable/alert_dark_frame">
 
     <TextView
         android:text="Opis"
@@ -52,8 +29,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
         android:layout_alignTop="@+id/imgCover"
         android:layout_toRightOf="@+id/imgCover"
         android:layout_toEndOf="@+id/imgCover">
@@ -96,7 +71,7 @@
                 android:id="@+id/tvCycle"
                 android:layout_weight="1"
                 android:textColor="@android:color/background_light"
-                android:textAlignment="viewStart" />
+                android:textAlignment="center" />
 
             <TextView
                 android:text="Gatunek"
@@ -105,8 +80,38 @@
                 android:id="@+id/tvGenre"
                 android:layout_weight="1"
                 android:textColor="@android:color/background_light"
-                android:textAlignment="viewEnd" />
+                android:textAlignment="center" />
         </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imgCover"
+        android:background="@android:drawable/alert_dark_frame"
+        android:layout_below="@+id/tvID"
+       />
+
+    <TextView
+        android:text="#"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/hasz"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:text="ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/hasz"
+        android:layout_toEndOf="@+id/hasz"
+        android:id="@+id/tvID"
+        android:textColor="@android:color/background_light" />
+
 
 </RelativeLayout>

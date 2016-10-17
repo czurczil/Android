@@ -5,6 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.view.View;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by czurczak on 12.09.2016.
@@ -88,14 +98,16 @@ public class Database extends SQLiteOpenHelper {
     }
     public void AddBook(String title,  String author, int year, String desc,  String cycle, String type){
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_TITLE, title);
-        values.put(KEY_AUTHOR, author);
-        values.put(KEY_YEAR, year);
-        values.put(KEY_DESC, desc);
-        values.put(KEY_CYKLE, cycle);
-        values.put(KEY_GENRE, type);
-        db.insert("Ksiazki", null, values);
+
+            ContentValues values = new ContentValues();
+            values.put(KEY_TITLE, title);
+            values.put(KEY_AUTHOR, author);
+            values.put(KEY_YEAR, year);
+            values.put(KEY_DESC, desc);
+            values.put(KEY_CYKLE, cycle);
+            //values.put(KEY_COVER, image);
+            values.put(KEY_GENRE, type);
+            db.insert(TABLE_NAME, null, values);
     }
     public void AddBook(String title,  String author, int year,  String cycle, String type){
         SQLiteDatabase db = getWritableDatabase();
@@ -132,6 +144,36 @@ public class Database extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, values);
     }
 
+    public void SaveImage(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("Create table if not exists tb (image blob)");
+        //String path = "C:\\Users\\czurczak\\Desktop\\180c50d773.jpg";
+        String extr = Environment.getExternalStorageDirectory().toString();
+        try{
+            FileInputStream im = new FileInputStream(extr + "/" + "180c50d773.jpg");
+            byte[] image = new byte[im.available()];
+            im.read(image);
+            ContentValues values = new ContentValues();
+            values.put("image", image);
+            db.insert("tb", null, values);
+            im.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    public Bitmap GetImage(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("Select * From tb", null);
+        c.move(0);
+        if(c.moveToNext()){
+            byte[] image = c.getBlob(0);
+            Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+
+            return bmp;
+        }
+        else return null;
+    }
     public void DeleteBook(int id){
         SQLiteDatabase db = getWritableDatabase();
         String[] ksiazki = {""+id};
@@ -141,7 +183,7 @@ public class Database extends SQLiteOpenHelper {
     public void UpdateBook(int id){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Okładka","a180c50d773.jpg");
+        values.put("Okładka","a180c50d773");
         db.update(TABLE_NAME,values,"id="+id, null);
     }
 
