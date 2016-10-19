@@ -20,7 +20,6 @@ public class Search extends AppCompatActivity implements AdapterView.OnItemSelec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-
         final EditText phrase = (EditText)findViewById(R.id.editText);
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);

@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class Database extends SQLiteOpenHelper {
     public Database(Context context){
-        super(context, "Biblioteka.db", null, 2);
+        super(context, "Biblioteka.db", null, 5);
     }
 
     private static final String DATABASE_NAME = "Biblioteka.db";
@@ -127,24 +127,14 @@ public class Database extends SQLiteOpenHelper {
         values.put(KEY_YEAR, year);
         db.insert(TABLE_NAME, null, values);
     }
-    public void AddBook(String title,  String author){
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_TITLE, title);
-        values.put(KEY_AUTHOR, author);
-        db.insert(TABLE_NAME, null, values);
-    }
 
     public byte[] SaveImage(String path){
-        //SQLiteDatabase db = getWritableDatabase();
         String extr = Environment.getExternalStorageDirectory().toString();
         try{
             FileInputStream im = new FileInputStream(extr + "/Biblioteka/covers/" + path);
             byte[] image = new byte[im.available()];
             im.read(image);
-            //ContentValues values = new ContentValues();
-            //values.put(KEY_COVER, image);
-            //db.insert(TABLE_NAME, null, values);
+
             im.close();
             return image;
         }
@@ -154,10 +144,7 @@ public class Database extends SQLiteOpenHelper {
         return null;
     }
     public Bitmap GetImage(Cursor c){
-/*        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("Select " + KEY_COVER + " From " + TABLE_NAME, null);
-        c.move(0);
-        if(c.moveToNext()){*/
+
             byte[] image = c.getBlob(6);
             Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 
@@ -167,14 +154,14 @@ public class Database extends SQLiteOpenHelper {
     public void DeleteBook(int id){
         SQLiteDatabase db = getWritableDatabase();
         String[] ksiazki = {""+id};
-        db.delete(TABLE_NAME, "id=?", ksiazki);
+        db.delete(TABLE_NAME, "_id=?", ksiazki);
     }
 
     public void UpdateBook(int id){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Okładka","a180c50d773");
-        db.update(TABLE_NAME,values,"id="+id, null);
+        db.update(TABLE_NAME,values,"_id="+id, null);
     }
 
     public Database open(){

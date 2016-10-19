@@ -60,23 +60,25 @@ public class ShowResults extends AppCompatActivity {
                 fromColNames,
                 toViewIDs
         );
-        myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Cursor cursor, int colIndex) {
-                //String name = cursor.getString(colIndex);
-                if (view.getId() == R.id.imgCover ) {
+
+        if(cursor != null && cursor.moveToFirst()) {
+            myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+                @Override
+                public boolean setViewValue(View view, Cursor cursor, int colIndex) {
+                    //String name = cursor.getString(colIndex);
+                    if (view.getId() == R.id.imgCover) {
                     /*ImageView IV=(ImageView) view;                                                            Commented section
                     String pack =  getApplicationContext().getPackageName();                                    set cover src to drawable
                     int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
                     IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));*/
 
-                    ((ImageView) view).setImageBitmap(db.GetImage(cursor));
-                    return true;
+                        ((ImageView) view).setImageBitmap(db.GetImage(cursor));
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
-
+            });
+        }
         return myCursorAdapter;
     }
 }

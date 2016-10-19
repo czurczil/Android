@@ -31,7 +31,9 @@ public class AddOne extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isEmpty(title) == false && isEmpty(author) == false) {
+                if(isEmpty(cover) == true)
+                    cover.setText("brak_okladki.jpg");
+                if(isEmpty(title) == false && isEmpty(author) == false && isEmpty(year) == false) {
                     db.AddBook((title.getText()).toString(),
                             (author.getText()).toString(),
                             Integer.parseInt((year.getText()).toString()),
