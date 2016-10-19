@@ -8,14 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.view.View;
-
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Blob;
 
 /**
  * Created by czurczak on 12.09.2016.
@@ -60,14 +54,9 @@ public class Database extends SQLiteOpenHelper {
     public Cursor ShowAll(){
         SQLiteDatabase db = getReadableDatabase();
 
-        //String[] kolumny = {KEY_ID, KEY_TITLE, KEY_AUTHOR, KEY_YEAR, KEY_DESC, KEY_CYKLE, KEY_COVER, KEY_GENRE};
-        //Cursor cursor = db.query(TABLE_NAME, kolumny, null, null, null, null, null); //
-
-        //String newID = "_id";
         String slctQuery = "SELECT " + KEY_ID  + ", " + KEY_TITLE + ", " + KEY_AUTHOR + ", " + KEY_YEAR + ", "
                 + KEY_DESC + ", " + KEY_CYKLE + ", " + KEY_COVER + ", " + KEY_GENRE + " FROM " + TABLE_NAME;
-       /* String slctQuery = "SELECT " + KEY_ID + " AS " + newID + ", " + KEY_TITLE + ", " + KEY_AUTHOR + ", " + KEY_YEAR + ", "
-                + KEY_DESC + ", " + KEY_CYKLE + ", " + KEY_COVER + ", " + KEY_GENRE + " FROM " + TABLE_NAME + " WHERE " + KEY_ID + "=1";*/
+
         Cursor cursor = db.rawQuery(slctQuery, null);
         if(cursor != null)
             cursor.move(0);
@@ -75,14 +64,14 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public Cursor ShowSelected (String spinner, String text){
-        Cursor k;
         SQLiteDatabase db = getReadableDatabase();
+
         String[] args = new String[1];
         args[0] = "%" + text + "%";
         if(spinner.equals("Rok wydania")) spinner = "Rok_wydania";
         String slctQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + spinner + " ";
-        k = db.rawQuery(slctQuery + "LIKE ?", args);
-        return k;
+        Cursor cursor = db.rawQuery(slctQuery + "LIKE ?", args);
+        return cursor;
     }
 
     public void AddBook(String title,  String author, int year, String desc,  String cycle, String cover, String type){
