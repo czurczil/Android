@@ -61,7 +61,7 @@ public class ShowResults extends AppCompatActivity {
                 toViewIDs
         );
 
-        if(cursor != null && cursor.moveToFirst()) {
+        if(cursor != null && cursor.moveToFirst() && cursor.getBlob(cursor.getColumnIndex("Okładka")) != null) {
             myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
                 @Override
                 public boolean setViewValue(View view, Cursor cursor, int colIndex) {
@@ -71,8 +71,24 @@ public class ShowResults extends AppCompatActivity {
                     String pack =  getApplicationContext().getPackageName();                                    set cover src to drawable
                     int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
                     IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));*/
-
                         ((ImageView) view).setImageBitmap(db.GetImage(cursor));
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
+        else {
+            myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+                @Override
+                public boolean setViewValue(View view, Cursor cursor, int colIndex) {
+                    String name = "brak_okladki";
+                    if (view.getId() == R.id.imgCover) {
+                        ImageView IV=(ImageView) view;
+                        String pack =  getApplicationContext().getPackageName();
+                        int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
+                        IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));
+                        //((ImageView) view).setImageBitmap(db.GetImage(cursor));
                         return true;
                     }
                     return false;

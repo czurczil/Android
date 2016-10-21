@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -74,16 +75,19 @@
         android:singleLine="true"
         android:hint="Gatunek" />
 
-    <EditText
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="none"
-        android:ems="10"
-        android:id="@+id/cover"
-        android:hint="Nazwa okładki"
-        android:textColor="@android:color/white"
-        android:textColorHint="#686464"
-        android:singleLine="true" />
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imageView" />
+
+    <Button
+        android:text="Wybierz okładkę..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gallery"
+        android:textAlignment="center"
+        android:layout_gravity="right"/>
 
     <Button
         android:layout_width="wrap_content"
