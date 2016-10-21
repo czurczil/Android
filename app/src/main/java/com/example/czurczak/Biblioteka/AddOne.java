@@ -1,23 +1,14 @@
 package com.example.czurczak.Biblioteka;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 /**
  * Created by czurczak on 22.09.2016.
@@ -35,9 +26,9 @@ public class AddOne extends AppCompatActivity {
         setContentView(R.layout.add_one);
 
         //Refresh the gallery
-        sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse
+        /*sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse
                 ("file://"
-                        + Environment.getExternalStorageDirectory())));
+                        + Environment.getExternalStorageDirectory())));*/
 
         final EditText title = (EditText) findViewById(R.id.title);
         final EditText author = (EditText) findViewById(R.id.author);
@@ -74,6 +65,8 @@ public class AddOne extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                 }
                 else Toast.makeText(getApplicationContext(), "Pola z gwiazdkami są wymagane", Toast.LENGTH_SHORT).show();
+                cover = null;
+                RestartActivity();
             }
         });
     }
@@ -98,5 +91,11 @@ public class AddOne extends AppCompatActivity {
                 imageView.setImageURI(imageUri);
                 cover = db.SaveImageFromGallery(this.getContentResolver(), imageUri);
             }
+    }
+
+    public void RestartActivity(){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 }

@@ -3,20 +3,17 @@ package com.example.czurczak.Biblioteka;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URI;
 
 /**
  * Created by czurczak on 12.09.2016.
@@ -135,21 +132,6 @@ public class Database extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, values);
     }
 
-    /*public byte[] SaveImage(String path){
-        String extr = Environment.getExternalStorageDirectory().toString();
-        try{
-            FileInputStream im = new FileInputStream(extr + "/Biblioteka/covers/" + path);
-            byte[] image = new byte[im.available()];
-            im.read(image);
-
-            im.close();
-            return image;
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        return null;
-    }*/
     public Bitmap GetImage(Cursor c){
                 byte[] image = c.getBlob(6);
         if(image != null) {
@@ -190,5 +172,28 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return this;
     }
+
+    public void RecordCount(Context context,Cursor cursor){
+        int count = cursor.getCount();
+        if(count == 1) Toast.makeText(context, "Znaleziono " + cursor.getCount()+ " wynik", Toast.LENGTH_SHORT).show();
+        else if(count > 1 && count < 5 ) Toast.makeText(context, "Znaleziono " + cursor.getCount()+ " wyniki", Toast.LENGTH_SHORT).show();
+        else if (count > 4) Toast.makeText(context, "Znaleziono " + cursor.getCount()+ " wyników", Toast.LENGTH_SHORT).show();
+    }
+
+        /*public byte[] SaveImage(String path){
+        String extr = Environment.getExternalStorageDirectory().toString();
+        try{
+            FileInputStream im = new FileInputStream(extr + "/Biblioteka/covers/" + path);
+            byte[] image = new byte[im.available()];
+            im.read(image);
+
+            im.close();
+            return image;
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return null;
+    }*/
 
 }

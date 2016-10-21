@@ -24,7 +24,9 @@ public class ShowResults extends AppCompatActivity {
         if(b != null){
             String spinner = b.getString("Spinner"); //get spinner and
             String phrase = b.getString("Phrase");   //searching phrase value from Search class
-            myList.setAdapter(ListViewLayout(db.ShowSelected(spinner, phrase)));
+            Cursor cursor = db.ShowSelected(spinner, phrase);
+            myList.setAdapter(ListViewLayout(cursor));
+            db.RecordCount(getApplicationContext(), cursor);
         }
         else  myList.setAdapter(ListViewLayout(db.ShowAll()));
     }
@@ -72,23 +74,6 @@ public class ShowResults extends AppCompatActivity {
                     int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
                     IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));*/
                         ((ImageView) view).setImageBitmap(db.GetImage(cursor));
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
-        else {
-            myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-                @Override
-                public boolean setViewValue(View view, Cursor cursor, int colIndex) {
-                    String name = "brak_okladki";
-                    if (view.getId() == R.id.imgCover) {
-                        ImageView IV=(ImageView) view;
-                        String pack =  getApplicationContext().getPackageName();
-                        int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
-                        IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));
-                        //((ImageView) view).setImageBitmap(db.GetImage(cursor));
                         return true;
                     }
                     return false;
