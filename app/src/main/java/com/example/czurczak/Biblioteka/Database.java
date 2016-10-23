@@ -75,6 +75,8 @@ public class Database extends SQLiteOpenHelper {
         if(spinner.equals("Rok wydania")) spinner = "Rok_wydania";
         String slctQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + spinner + " ";
         Cursor cursor = db.rawQuery(slctQuery + "LIKE ?", args);
+        if(cursor != null)
+            cursor.move(0);
         return cursor;
     }
 

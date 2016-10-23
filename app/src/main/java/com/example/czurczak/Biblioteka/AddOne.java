@@ -63,10 +63,10 @@ public class AddOne extends AppCompatActivity {
                             (cover),
                             (genre.getText()).toString());
                     Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                    RestartActivity();
                 }
                 else Toast.makeText(getApplicationContext(), "Pola z gwiazdkami są wymagane", Toast.LENGTH_SHORT).show();
                 cover = null;
-                RestartActivity();
             }
         });
     }
