@@ -35,13 +35,13 @@ public class ShowResults extends AppCompatActivity {
 
         //mapping from cursor to view fields
         String[] fromColNames = new String[] {
-                db.KEY_ID,
-                db.KEY_TITLE,
+                db.TB_ID,
+                db.TB_TITLE,
                 db.KEY_AUTHOR,
-                db.KEY_YEAR,
-                db.KEY_DESC,
-                db.KEY_CYKLE,
-                db.KEY_COVER,
+                db.TB_YEAR,
+                db.TB_DESC,
+                db.TB_CYKLE,
+                db.TB_COVER,
                 db.KEY_GENRE
         };
         int[] toViewIDs = new int[] {

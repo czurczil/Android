@@ -31,7 +31,8 @@ public class AddOne extends AppCompatActivity {
                         + Environment.getExternalStorageDirectory())));*/
 
         final EditText title = (EditText) findViewById(R.id.title);
-        final EditText author = (EditText) findViewById(R.id.author);
+        final EditText first_name = (EditText)findViewById(R.id.first_name);
+        final EditText last_name = (EditText)findViewById(R.id.last_name);
         final EditText year = (EditText) findViewById(R.id.year);
         final EditText description = (EditText) findViewById(R.id.desc);
         final EditText cycle = (EditText) findViewById(R.id.cycle);
@@ -54,9 +55,10 @@ public class AddOne extends AppCompatActivity {
             public void onClick(View view) {
 /*                if(cover == null)
                     cover =*/
-                if(isEmpty(title) == false && isEmpty(author) == false && isEmpty(year) == false) {
+                if(isEmpty(title) == false && isEmpty(first_name) == false && isEmpty(last_name)==false && isEmpty(year) == false) {
                     db.AddBook((title.getText()).toString(),
-                            (author.getText()).toString(),
+                            (first_name.getText()).toString(),
+                            (last_name.getText()).toString(),
                             Integer.parseInt((year.getText()).toString()),
                             (description.getText()).toString(),
                             (cycle.getText()).toString(),
