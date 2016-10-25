@@ -11,17 +11,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by czurczak on 12.09.2016.
  */
 public class Database extends SQLiteOpenHelper {
     public Database(Context context){
-        super(context, "Biblioteka2.db", null, 1);
+        super(context, "Biblioteka2.db", null, 2);
     }
 
     public static final String DATABASE_NAME = "Biblioteka2.db";
@@ -58,6 +57,9 @@ public class Database extends SQLiteOpenHelper {
     public static final String TBG_ID = "_id";
     public static final String TBG_BOOK_ID = "id_Ksiazki";
     public static final String TBG_GENRE_ID = "id_Gatunku";
+
+    public static final int CoverHeight = 300;
+    public static final int CoverWidth = 200;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -101,6 +103,10 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_AUTHOR);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_AUTHOR_BOOKS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GENRE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKS_GENRE);
         onCreate(db);
     }
 
@@ -156,6 +162,7 @@ public class Database extends SQLiteOpenHelper {
         if(count == 1) Toast.makeText(context, "Znaleziono " + cursor.getCount()+ " wynik", Toast.LENGTH_SHORT).show();
         else if(count > 1 && count < 5 ) Toast.makeText(context, "Znaleziono " + cursor.getCount()+ " wyniki", Toast.LENGTH_SHORT).show();
         else if (count > 4) Toast.makeText(context, "Znaleziono " + cursor.getCount()+ " wyników", Toast.LENGTH_SHORT).show();
+        else  Toast.makeText(context, "Nie znaleziono wyników", Toast.LENGTH_SHORT).show();
     }
 
     //Adding books
@@ -306,10 +313,23 @@ public class Database extends SQLiteOpenHelper {
         else return null;
     }
     public byte[] SaveImageFromGallery(ContentResolver cr, Uri imageUri){
+
         try{
+            InputStream in = cr.openInputStream(imageUri);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;                              // to get image height and width
+            BitmapFactory.decodeStream(in, null, options);
+
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(cr, imageUri);
+            Bitmap scaled;
             ByteArrayOutputStream img = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, img);
+            if(options.outWidth > CoverWidth && options.outHeight > CoverHeight) {
+                scaled = Bitmap.createScaledBitmap(bitmap, CoverWidth, CoverHeight, true);
+                scaled.compress(Bitmap.CompressFormat.JPEG, 100, img);
+            }
+            else bitmap.compress(Bitmap.CompressFormat.JPEG, 100, img);
+
+            in.close();
             byte[] image = img.toByteArray();
             return image;
         }
@@ -330,20 +350,6 @@ public class Database extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("Okładka","a180c50d773");
         db.update(TABLE_BOOKS,values,"_id="+id, null);
-    }
-    public void temp(){
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues ids = new ContentValues();
-        ids.put(TBG_GENRE_ID, 1);
-        ids.put(TBG_BOOK_ID, 1);
-        db.insert(TABLE_BOOKS_GENRE, null, ids);
-
-        ContentValues ids2 = new ContentValues();
-        ids2.put(TAB_AUTHOR_ID, 1);
-        ids2.put(TAB_BOOK_ID, 2);
-        db.insert(TABLE_AUTHOR_BOOKS, null, ids2);
-        db.close();
     }
 
     public SQLiteDatabase open(){

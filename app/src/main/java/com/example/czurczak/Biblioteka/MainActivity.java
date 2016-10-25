@@ -1,8 +1,6 @@
 package com.example.czurczak.Biblioteka;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +12,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*Database db = new Database(this);
-        db.temp();*/
-
 
         Button show_all_but = (Button)findViewById(R.id.button);
         show_all_but.setOnClickListener(new View.OnClickListener() {

@@ -33,6 +33,7 @@ public class ShowResults extends AppCompatActivity {
 
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
 
+        cursor.move(0);
         //mapping from cursor to view fields
         String[] fromColNames = new String[] {
                 db.TB_ID,
@@ -62,7 +63,6 @@ public class ShowResults extends AppCompatActivity {
                 fromColNames,
                 toViewIDs
         );
-
         if(cursor != null && cursor.moveToFirst() && cursor.getBlob(cursor.getColumnIndex("Okładka")) != null) {
             myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
                 @Override
