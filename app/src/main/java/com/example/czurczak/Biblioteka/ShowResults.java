@@ -35,7 +35,7 @@ public class ShowResults extends AppCompatActivity {
 
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
 
-        cursor.move(0);
+
         //mapping from cursor to view fields
         String[] fromColNames = new String[] {
                 db.TB_ID,
@@ -44,8 +44,8 @@ public class ShowResults extends AppCompatActivity {
                 db.TB_YEAR,
                 db.TB_DESC,
                 db.TB_CYKLE,
-                db.TB_COVER,
-                db.TG_GENRE
+                db.TG_GENRE,
+                db.TB_COVER
         };
         int[] toViewIDs = new int[] {
                 R.id.tvID,
@@ -54,8 +54,8 @@ public class ShowResults extends AppCompatActivity {
                 R.id.tvYear,
                 R.id.tvDesc,
                 R.id.tvCycle,
-                R.id.imgCover,
-                R.id.tvGenre
+                R.id.tvGenre,
+                R.id.imgCover
         };
 
         SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
@@ -65,7 +65,7 @@ public class ShowResults extends AppCompatActivity {
                 fromColNames,
                 toViewIDs
         );
-        if(cursor != null && cursor.moveToFirst() && cursor.getBlob(cursor.getColumnIndex("Okładka")) != null) {
+        if(cursor != null && cursor.moveToFirst()) {
             myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
                 @Override
                 public boolean setViewValue(View view, Cursor cursor, int colIndex) {
@@ -83,15 +83,5 @@ public class ShowResults extends AppCompatActivity {
             });
         }
         return myCursorAdapter;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

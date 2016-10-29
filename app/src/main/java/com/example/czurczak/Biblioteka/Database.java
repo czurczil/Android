@@ -134,7 +134,7 @@ public class Database extends SQLiteOpenHelper {
     public Cursor ShowSelected (String spinner, String text){
         SQLiteDatabase db = getReadableDatabase();
 
-        String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, k.Okładka, g.Gatunek from Ksiazki k " +
+        String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, g.Gatunek, k.Okładka from Ksiazki k " +
                 "LEFT JOIN Ksiazki_Autorów ka ON (k._id=ka.id_Ksiazki) " +
                 "LEFT JOIN Autor a ON (ka.id_Autora=a._id) " +
                 "LEFT JOIN Gatunki_Ksiazek gk ON (k._id=gk.id_Ksiazki) " +
@@ -198,108 +198,6 @@ public class Database extends SQLiteOpenHelper {
             ids.put(TBG_GENRE_ID, genre_id);
             ids.put(TBG_BOOK_ID, book_id);
         db.insert(TABLE_BOOKS_GENRE, null, ids);
-
-        ContentValues ids2 = new ContentValues();
-            ids2.put(TAB_AUTHOR_ID, author_id);
-            ids2.put(TAB_BOOK_ID, book_id);
-        db.insert(TABLE_AUTHOR_BOOKS, null, ids2);
-
-        db.close();
-    }
-    public void AddBook(String title, String first_name, String last_name, int year, String desc,  String cycle, String type){
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues books = new ContentValues();
-            books.put(TB_TITLE, title);
-            books.put(TB_YEAR, year);
-            books.put(TB_DESC, desc);
-            books.put(TB_CYKLE, cycle);
-        long book_id = db.insert(TABLE_BOOKS, null, books);
-
-        ContentValues author = new ContentValues();
-            author.put(TA_FIRST_NAME, first_name);
-            author.put(TA_LAST_NAME, last_name);
-        long author_id = db.insert(TABLE_AUTHOR, null, author);
-
-        ContentValues genre = new ContentValues();
-            genre.put(TG_GENRE, type);
-        long genre_id = db.insert(TABLE_GENRE, null, genre);
-
-        ContentValues ids = new ContentValues();
-            ids.put(TBG_GENRE_ID, genre_id);
-            ids.put(TBG_BOOK_ID, book_id);
-        db.insert(TABLE_BOOKS_GENRE, null, ids);
-
-        ContentValues ids2 = new ContentValues();
-            ids2.put(TAB_AUTHOR_ID, author_id);
-            ids2.put(TAB_BOOK_ID, book_id);
-        db.insert(TABLE_AUTHOR_BOOKS, null, ids2);
-
-        db.close();
-    }
-    public void AddBook(String title,   String first_name, String last_name, int year,  String cycle, String type){
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues books = new ContentValues();
-            books.put(TB_TITLE, title);
-            books.put(TB_YEAR, year);
-            books.put(TB_CYKLE, cycle);
-        long book_id = db.insert(TABLE_BOOKS, null, books);
-
-        ContentValues author = new ContentValues();
-            author.put(TA_FIRST_NAME, first_name);
-            author.put(TA_LAST_NAME, last_name);
-        long author_id = db.insert(TABLE_AUTHOR, null, author);
-
-        ContentValues genre = new ContentValues();
-            genre.put(TG_GENRE, type);
-        long genre_id = db.insert(TABLE_GENRE, null, genre);
-
-        ContentValues ids = new ContentValues();
-            ids.put(TBG_GENRE_ID, genre_id);
-            ids.put(TBG_BOOK_ID, book_id);
-        db.insert(TABLE_BOOKS_GENRE, null, ids);
-
-        ContentValues ids2 = new ContentValues();
-            ids2.put(TAB_AUTHOR_ID, author_id);
-            ids2.put(TAB_BOOK_ID, book_id);
-        db.insert(TABLE_AUTHOR_BOOKS, null, ids2);
-
-        db.close();
-    }
-    public void AddBook(String title,   String first_name, String last_name, int year,  String cycle){
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues books = new ContentValues();
-            books.put(TB_TITLE, title);
-            books.put(TB_YEAR, year);
-            books.put(TB_CYKLE, cycle);
-        long book_id = db.insert(TABLE_BOOKS, null, books);
-
-        ContentValues author = new ContentValues();
-            author.put(TA_FIRST_NAME, first_name);
-            author.put(TA_LAST_NAME, last_name);
-        long author_id = db.insert(TABLE_AUTHOR, null, author);
-
-        ContentValues ids2 = new ContentValues();
-            ids2.put(TAB_AUTHOR_ID, author_id);
-            ids2.put(TAB_BOOK_ID, book_id);
-        db.insert(TABLE_AUTHOR_BOOKS, null, ids2);
-
-        db.close();
-    }
-    public void AddBook(String title,   String first_name, String last_name, int year){
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues books = new ContentValues();
-            books.put(TB_TITLE, title);
-            books.put(TB_YEAR, year);
-        long book_id =  db.insert(TABLE_BOOKS, null, books);
-
-        ContentValues author = new ContentValues();
-            author.put(TA_FIRST_NAME, first_name);
-            author.put(TA_LAST_NAME, last_name);
-        long author_id =  db.insert(TABLE_AUTHOR, null, author);
 
         ContentValues ids2 = new ContentValues();
             ids2.put(TAB_AUTHOR_ID, author_id);
