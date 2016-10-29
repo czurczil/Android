@@ -15,9 +15,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.czurczak.Biblioteka.ShowResults"></activity>
-        <activity android:name="com.example.czurczak.Biblioteka.AddOne"></activity>
-        <activity android:name="com.example.czurczak.Biblioteka.Search"></activity>
+        <activity android:name="com.example.czurczak.Biblioteka.ShowResults"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.czurczak.Biblioteka.MainActivity" />
+        </activity>
+        <activity android:name="com.example.czurczak.Biblioteka.AddBook"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.czurczak.Biblioteka.MainActivity" />
+        </activity>
+        <activity android:name="com.example.czurczak.Biblioteka.Search"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.czurczak.Biblioteka.MainActivity" />
+        </activity>
+        <activity android:name="com.example.czurczak.Biblioteka.AddAuthor"
+            android:parentActivityName=".AddBook">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.czurczak.Biblioteka.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

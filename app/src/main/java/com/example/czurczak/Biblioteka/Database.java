@@ -20,7 +20,7 @@ import java.io.InputStream;
  */
 public class Database extends SQLiteOpenHelper {
     public Database(Context context){
-        super(context, "Biblioteka2.db", null, 2);
+        super(context, "Biblioteka2.db", null, 4);
     }
 
     public static final String DATABASE_NAME = "Biblioteka2.db";
@@ -43,6 +43,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String TA_SEX = "Płeć";
     public static final String TA_BIRTH_PLACE = "Miejsce_urodzenia";
     public static final String TA_BIO = "Biografia";
+    public static final String TA_PHOTO = "Zdjęcie";
 
     private static final String TABLE_AUTHOR_BOOKS = "Ksiazki_Autorów";
     public static final String TAB_ID = "_id";
@@ -78,7 +79,8 @@ public class Database extends SQLiteOpenHelper {
                 TA_BIRTH_DATE + " text," +
                 TA_SEX + " text," +
                 TA_BIRTH_PLACE + " text," +
-                TA_BIO + " text" +
+                TA_BIO + " text," +
+                TA_PHOTO + " blob" +
         ");");
         db.execSQL("CREATE TABLE " + TABLE_AUTHOR_BOOKS + " (" +
                 TAB_ID + " integer primary key autoincrement," +
@@ -166,7 +168,8 @@ public class Database extends SQLiteOpenHelper {
     }
 
     //Adding books
-    public void AddBook(String title,  String first_name, String last_name, int year, String desc,  String cycle, byte[] cover, String type){
+    public void AddBook(String title,  String first_name, String last_name, int year, String desc,  String cycle, byte[] cover,
+                        String type, String birth_date, String birth_place, String sex, String bio, byte[] photo){
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues books = new ContentValues();
@@ -180,8 +183,11 @@ public class Database extends SQLiteOpenHelper {
         ContentValues author = new ContentValues();
             author.put(TA_FIRST_NAME, first_name);
             author.put(TA_LAST_NAME, last_name);
-            author.put(TA_BIRTH_DATE, "0/00/0000");
-            author.put(TA_SEX, "Mężczyzna/Kobieta");
+            author.put(TA_BIRTH_DATE, birth_date);
+            author.put(TA_SEX, sex);
+            author.put(TA_BIRTH_PLACE, birth_place);
+            author.put(TA_BIO, bio);
+            author.put(TA_PHOTO, photo);
         long author_id = db.insert(TABLE_AUTHOR, null, author);
 
         ContentValues genre = new ContentValues();

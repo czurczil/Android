@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         add_one_but.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddOne.class);
+                Intent intent = new Intent(getApplicationContext(), AddBook.class);
                 startActivity(intent);
             }
         });

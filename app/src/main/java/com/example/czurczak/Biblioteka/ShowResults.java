@@ -3,6 +3,7 @@ package com.example.czurczak.Biblioteka;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ public class ShowResults extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.db_listview);
         ListView myList = (ListView)findViewById(R.id.db_listview);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         Bundle b = getIntent().getExtras();
         if(b != null){
@@ -43,7 +45,7 @@ public class ShowResults extends AppCompatActivity {
                 db.TB_DESC,
                 db.TB_CYKLE,
                 db.TB_COVER,
-                db.KEY_GENRE
+                db.TG_GENRE
         };
         int[] toViewIDs = new int[] {
                 R.id.tvID,
@@ -81,5 +83,15 @@ public class ShowResults extends AppCompatActivity {
             });
         }
         return myCursorAdapter;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
