@@ -49,7 +49,6 @@ public class AddAuthor extends AppCompatActivity {
         choose_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //AddBook gallery = new AddBook();
                 ChooseImage();
             }
         });
@@ -67,7 +66,11 @@ public class AddAuthor extends AppCompatActivity {
                 byte[] cover = b.getByteArray("Okładka");
                 String genre = b.getString("Gatunek");
                 if(a.isEmpty(first_name) == false && a.isEmpty(last_name)==false) {
-                    db.AddBook(title,
+                    //Jeśli nie ma jeszcze ani takiej ksiazki, ani autora, ani gatunku
+                    if(db.IsAlreadyInDatabase(title, 0) == false
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
+                            && db.IsAlreadyInDatabase(genre, 3) == false) {
+                        db.AddBook(title,
                             (first_name.getText()).toString(),
                             (last_name.getText()).toString(),
                             Integer.parseInt(year),
@@ -83,9 +86,114 @@ public class AddAuthor extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
+                    }
+                    //Jeśli jest juz taka ksiazkia ale nie ma ani autora, ani gatunku
+                    else if(db.IsAlreadyInDatabase(title, 0) == true
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
+                            && db.IsAlreadyInDatabase(genre, 3) == false){
+                        db.AddBook((first_name.getText()).toString(),
+                                (last_name.getText()).toString(),
+                                genre,
+                                birth_date.getText().toString(),
+                                birth_place.getText().toString(),
+                                String.valueOf(sex.getSelectedItem()),
+                                bio.getText().toString(),
+                                photo,
+                                db.BoundBook(title , 0)
+                        );
+                        Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    //Jeśli nie ma jeszcze ani takiej ksiazki, ani gatunku ale jest autor
+                    else if(db.IsAlreadyInDatabase(title, 0) == false
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
+                            && db.IsAlreadyInDatabase(genre, 3) == false){
+                        db.AddBook(title,
+                                Integer.parseInt(year),
+                                description,
+                                cycle,
+                                cover,
+                                genre,
+                                db.BoundBook((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1)
+                        );
+                        Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    //Jeśli nie ma jeszcze ani takiej ksiazki, ani autora ale jest gatunek
+                    else if(db.IsAlreadyInDatabase(title, 0) == false
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
+                            && db.IsAlreadyInDatabase(genre, 2) == true){
+                        db.AddBook(title,
+                                (first_name.getText()).toString(),
+                                (last_name.getText()).toString(),
+                                Integer.parseInt(year),
+                                description,
+                                cycle,
+                                cover,
+                                birth_date.getText().toString(),
+                                birth_place.getText().toString(),
+                                String.valueOf(sex.getSelectedItem()),
+                                bio.getText().toString(),
+                                photo,
+                                db.BoundBook(genre, 2)
+                        );
+                        Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    //Jeśli jest juz taka ksiazka i autor ,ale nie ma gatunku
+                    else if(db.IsAlreadyInDatabase(title, 0) == true
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
+                            && db.IsAlreadyInDatabase(genre, 3) == false) {
+                        db.AddGenre(genre,db.BoundBook(title, 0), db.BoundBook((first_name.getText()).toString() + " " + (last_name.getText()).toString(),1));
+                        Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    //Jeśli jest juz taka ksiazka i gatunek ale nie ma autora
+                    else if(db.IsAlreadyInDatabase(title, 0) == true
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
+                            && db.IsAlreadyInDatabase(genre, 3) == true) {
+                        db.AddBook((first_name.getText()).toString(),
+                                (last_name.getText()).toString(),
+                                birth_date.getText().toString(),
+                                birth_place.getText().toString(),
+                                String.valueOf(sex.getSelectedItem()),
+                                bio.getText().toString(),
+                                photo,
+                                db.BoundBook(title, 0),
+                                db.BoundBook(genre, 2)
+                        );
+                        Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    //Jeśli jest juz taki autor i gatunek ale nie ma ksiazki
+                    else if(db.IsAlreadyInDatabase(title, 0) == false
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
+                            && db.IsAlreadyInDatabase(genre, 3) == true) {
+                        db.AddBook(title,
+                                Integer.parseInt(year),
+                                description,
+                                cycle,
+                                cover,
+                                db.BoundBook((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1),
+                                db.BoundBook(genre, 2)
+                        );
+                        Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    //Jeśli wszystko juz jest
+                    else {
+                        Toast.makeText(getApplicationContext(), "Taka książka znajduje się już w zbiorze", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
                 else Toast.makeText(getApplicationContext(), "Pola z gwiazdkami są wymagane", Toast.LENGTH_SHORT).show();
-                //
             }
         });
 
@@ -116,11 +224,5 @@ public class AddAuthor extends AppCompatActivity {
         Intent gallery = new Intent(Intent.ACTION_GET_CONTENT);
         gallery.setType("image/*");
         startActivityForResult(gallery, PICK_IMAGE);
-    }
-
-    public void RestartActivity(){
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
     }
 }

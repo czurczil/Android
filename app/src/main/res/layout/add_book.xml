@@ -31,7 +31,7 @@
             android:layout_gravity="center_horizontal"
             android:textColor="#ffffff"
             android:singleLine="true"
-            android:hint="Data wydania*"
+            android:hint="Rok wydania*"
             android:textColorHint="#686464"
             tools:ignore="Deprecated" />
 

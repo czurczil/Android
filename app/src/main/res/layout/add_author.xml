@@ -40,7 +40,7 @@
         android:singleLine="true"
         android:textColor="@android:color/white"
         android:textColorHint="#686464"
-        android:hint="Data urodzenia" />
+        android:hint="Data urodzenia (dd/mm/rrrr)" />
 
     <EditText
         android:layout_width="match_parent"

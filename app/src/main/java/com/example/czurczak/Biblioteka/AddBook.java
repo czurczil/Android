@@ -33,8 +33,6 @@ public class AddBook extends AppCompatActivity {
                         + Environment.getExternalStorageDirectory())));*/
 
         final EditText title = (EditText) findViewById(R.id.title);
-        final EditText first_name = (EditText)findViewById(R.id.first_name);
-        final EditText last_name = (EditText)findViewById(R.id.last_name);
         final EditText year = (EditText) findViewById(R.id.year);
         final EditText description = (EditText) findViewById(R.id.desc);
         final EditText cycle = (EditText) findViewById(R.id.cycle);
