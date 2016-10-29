@@ -3,7 +3,6 @@ package com.example.czurczak.Biblioteka;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,7 +63,7 @@ public class AddBook extends AppCompatActivity {
                     intent.putExtra("Gatunek", (genre.getText()).toString());
                     intent.putExtra("Okładka", cover);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
                 }
                 else Toast.makeText(getApplicationContext(), "Pola z gwiazdkami są wymagane", Toast.LENGTH_SHORT).show();
             }

@@ -1,12 +1,9 @@
 package com.example.czurczak.Biblioteka;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.SupportActionModeWrapper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -99,7 +96,7 @@ public class AddAuthor extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
