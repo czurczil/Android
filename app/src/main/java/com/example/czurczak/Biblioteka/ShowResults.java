@@ -2,6 +2,7 @@ package com.example.czurczak.Biblioteka;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,8 +30,12 @@ public class ShowResults extends AppCompatActivity {
             Cursor cursor = db.ShowSelected(spinner, phrase);
             myList.setAdapter(ListViewLayout(cursor));
             db.RecordCount(getApplicationContext(), cursor);
+            db.close();
         }
-        else  myList.setAdapter(ListViewLayout(db.ShowAll()));
+        else  {
+            myList.setAdapter(ListViewLayout(db.ShowAll()));
+            db.close();
+        }
     }
 
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
@@ -83,5 +88,15 @@ public class ShowResults extends AppCompatActivity {
             });
         }
         return myCursorAdapter;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

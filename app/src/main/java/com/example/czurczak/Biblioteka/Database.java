@@ -123,15 +123,20 @@ public class Database extends SQLiteOpenHelper {
     public Cursor ShowAll(){
         SQLiteDatabase db = getReadableDatabase();
 
-/*        String slctQuery = "SELECT " + TB_ID + "." + TABLE_BOOKS + ", " + TB_TITLE +
-                ", CONCAT(" + TA_FIRST_NAME + "." + TABLE_AUTHOR + ", ' ', " + TA_LAST_NAME + "." + TABLE_AUTHOR + ") AS Autor, " +
-                TB_YEAR + ", " + TB_DESC + ", " + TB_CYKLE + ", " + TB_COVER + ", " + TG_GENRE + "." + TABLE_GENRE +
-                " FROM " + TABLE_BOOKS + ", " + TABLE_AUTHOR + ", " + TABLE_GENRE + ";";*/
-        String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, k.Okładka, g.Gatunek from Ksiazki k " +
+ /*       String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, k.Okładka, g.Gatunek from Ksiazki k " +
                 "LEFT JOIN Ksiazki_Autorów ka ON (k._id=ka.id_Ksiazki) " +
                 "LEFT JOIN Autor a ON (ka.id_Autora=a._id)" +
                 "LEFT JOIN Gatunki_Ksiazek gk ON (k._id=gk.id_Ksiazki) " +
-                "LEFT JOIN Gatunek g ON (gk.id_Gatunku=g._id)";
+                "LEFT JOIN Gatunek g ON (gk.id_Gatunku=g._id)";*/
+        String slctQuery = "SELECT " + TABLE_BOOKS + "." + TB_ID + ", " +
+                "(" + TABLE_AUTHOR + "." + TA_FIRST_NAME + " || ' ' || " + TABLE_AUTHOR + "." + TA_LAST_NAME +") AS Autor, " +
+                TABLE_BOOKS + "." + TB_TITLE + ", " + TABLE_BOOKS + "." + TB_YEAR + ", " + TABLE_BOOKS + "." + TB_DESC + ", " +
+                TABLE_BOOKS + "." + TB_CYKLE + ", " + TABLE_BOOKS + "." + TB_COVER + ", " + TABLE_GENRE + "." + TG_GENRE + " " +
+                "FROM " + TABLE_BOOKS +
+                " LEFT JOIN " + TABLE_AUTHOR_BOOKS + " ON ("+ TABLE_BOOKS + "." + TB_ID +"=" + TABLE_AUTHOR_BOOKS + "." + TAB_BOOK_ID +") " +
+                "LEFT JOIN " + TABLE_AUTHOR + " ON ("+ TABLE_AUTHOR_BOOKS + "." + TAB_AUTHOR_ID +"=" + TABLE_AUTHOR + "." + TA_ID + ") " +
+                "LEFT JOIN " + TABLE_BOOKS_GENRE + " ON (" + TABLE_BOOKS + "." + TB_ID + "=" + TABLE_BOOKS_GENRE + "." + TBG_BOOK_ID + ") " +
+                "LEFT JOIN " + TABLE_GENRE + " ON (" + TABLE_BOOKS_GENRE + "." + TBG_GENRE_ID + "=" + TABLE_GENRE + "." + TG_ID + ")";
 
         Cursor cursor = db.rawQuery(slctQuery, null);
         if(cursor != null)
@@ -140,32 +145,50 @@ public class Database extends SQLiteOpenHelper {
     }
     public Cursor ShowSelected (String spinner, String text){
         SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
 
-        String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, k.Okładka, g.Gatunek from Ksiazki k " +
-                "LEFT JOIN Ksiazki_Autorów ka ON (k._id=ka.id_Ksiazki) " +
-                "LEFT JOIN Autor a ON (ka.id_Autora=a._id) " +
-                "LEFT JOIN Gatunki_Ksiazek gk ON (k._id=gk.id_Ksiazki) " +
-                "LEFT JOIN Gatunek g ON (gk.id_Gatunku=g._id)";
 
-        if(spinner.equals("Tytuł")) slctQuery = slctQuery + " WHERE k.Tytuł LIKE '%" + text + "%';";
-        else if (spinner.equals("Autor")) {
-            if(text.contains(" ")) {
-                String[] parts = text.split(" ");
-                String imie = parts[0];
-                String nazwisko = parts[1];
-                slctQuery = slctQuery + " WHERE (a.Imię LIKE '%" + imie + "%' AND a.Nazwisko LIKE '%" + nazwisko +"%')" +
-                        " OR (a.Nazwisko LIKE '%" + imie + "%' AND a.Imię LIKE '%" + nazwisko + "%');";
+ /*           String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, k.Okładka, g.Gatunek from Ksiazki k " +
+                    "LEFT JOIN Ksiazki_Autorów ka ON (k._id=ka.id_Ksiazki) " +
+                    "LEFT JOIN Autor a ON (ka.id_Autora=a._id) " +
+                    "LEFT JOIN Gatunki_Ksiazek gk ON (k._id=gk.id_Ksiazki) " +
+                    "LEFT JOIN Gatunek g ON (gk.id_Gatunku=g._id)";*/
+        String slctQuery = "SELECT " + TABLE_BOOKS + "." + TB_ID + ", " +
+                "(" + TABLE_AUTHOR + "." + TA_FIRST_NAME + " || ' ' || " + TABLE_AUTHOR + "." + TA_LAST_NAME +") AS Autor, " +
+                TABLE_BOOKS + "." + TB_TITLE + ", " + TABLE_BOOKS + "." + TB_YEAR + ", " + TABLE_BOOKS + "." + TB_DESC + ", " +
+                TABLE_BOOKS + "." + TB_CYKLE + ", " + TABLE_BOOKS + "." + TB_COVER + ", " + TABLE_GENRE + "." + TG_GENRE + " " +
+                "FROM " + TABLE_BOOKS +
+                " LEFT JOIN " + TABLE_AUTHOR_BOOKS + " ON ("+ TABLE_BOOKS + "." + TB_ID +"=" + TABLE_AUTHOR_BOOKS + "." + TAB_BOOK_ID +") " +
+                "LEFT JOIN " + TABLE_AUTHOR + " ON ("+ TABLE_AUTHOR_BOOKS + "." + TAB_AUTHOR_ID +"=" + TABLE_AUTHOR + "." + TA_ID + ") " +
+                "LEFT JOIN " + TABLE_BOOKS_GENRE + " ON (" + TABLE_BOOKS + "." + TB_ID + "=" + TABLE_BOOKS_GENRE + "." + TBG_BOOK_ID + ") " +
+                "LEFT JOIN " + TABLE_GENRE + " ON (" + TABLE_BOOKS_GENRE + "." + TBG_GENRE_ID + "=" + TABLE_GENRE + "." + TG_ID + ")";
+
+            if (spinner.equals("Autor")) {
+                if (text.contains(" ")) {
+                    String[] parts = text.split(" ");
+                    String imie = "%" + parts[0] + "%";
+                    String nazwisko = "%" + parts[1] + "%";
+                    slctQuery = slctQuery + " WHERE (" + TABLE_AUTHOR + "." + TA_FIRST_NAME + " LIKE ? AND " + TABLE_AUTHOR + "." + TA_LAST_NAME + " LIKE ?)" +
+                            " OR (" + TABLE_AUTHOR + "." + TA_LAST_NAME + " LIKE ? AND " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " LIKE ?);";
+                    cursor = db.rawQuery(slctQuery, new String[]{imie, nazwisko, imie, nazwisko});
+                } else {
+                    slctQuery = slctQuery + " WHERE " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " LIKE ? OR " + TABLE_AUTHOR + "." + TA_LAST_NAME + " LIKE ?;";
+                    cursor = db.rawQuery(slctQuery, new String[]{"%" + text + "%", "%" + text + "%"});
+                }
+            } else {
+                if (spinner.equals("Tytuł")) slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_TITLE +" LIKE ?;";
+                else if (spinner.equals("Rok wydania"))
+                    slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_YEAR + " LIKE ?;";
+                else if (spinner.equals("Cykl")) slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_CYKLE + " LIKE ?;";
+                else slctQuery = slctQuery + " WHERE " + TABLE_GENRE + "." + TG_GENRE + " LIKE ?;";
+
+                cursor = db.rawQuery(slctQuery, new String[]{"%" + text + "%"});
             }
-            else slctQuery = slctQuery + " WHERE a.Imię LIKE '" + text + "' OR a.Nazwisko LIKE '%" + text +"%';";
-        }
-        else if (spinner.equals("Rok wydania")) slctQuery = slctQuery + " WHERE k.Rok_wydania  LIKE '" + text + "';";
-        else if (spinner.equals("Cykl")) slctQuery = slctQuery + " WHERE k.Cykl LIKE '%" + text + "%';";
-        else slctQuery = slctQuery + " WHERE g.Gatunek LIKE '%" + text + "&';";
 
-        Cursor cursor = db.rawQuery(slctQuery, null);
-        if(cursor != null)
-            cursor.move(0);
-        return cursor;
+            if (cursor != null)
+                cursor.move(0);
+            return cursor;
+
     }
     public void RecordCount(Context context,Cursor cursor){
         int count = cursor.getCount();
@@ -367,26 +390,18 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String slctquery;
         if(n == 0) {
-            slctquery = "Select _id from Ksiazki WHERE Tytuł LIKE '" + text + "';";
-            Cursor cursor = db.rawQuery(slctquery, null);
-            cursor.moveToFirst();
-            long id = Integer.valueOf(cursor.getString(0));
-            return id;
+            slctquery = "SELECT " + TB_ID +" FROM " + TABLE_BOOKS + " WHERE " + TB_TITLE + " LIKE ?;";
         }
         else if(n == 1) {
-            slctquery = "SELECT a._id from Autor a WHERE (a.Imię || ' ' || a.Nazwisko) LIKE '" + text + "'";
-            Cursor cursor = db.rawQuery(slctquery, null);
-            cursor.moveToFirst();
-            long id = Integer.valueOf(cursor.getString(0));
-            return id;
+            slctquery = "SELECT " + TA_ID + " FROM " + TABLE_AUTHOR + " WHERE (" + TA_FIRST_NAME + " || ' ' || " + TA_LAST_NAME +") LIKE ?";
         }
         else {
-            slctquery = "SELECT _id from Gatunek WHERE Gatunek LIKE '" + text + "'";
-            Cursor cursor = db.rawQuery(slctquery, null);
-            cursor.moveToFirst();
-            long id = Integer.valueOf(cursor.getString(0));
-            return id;
+            slctquery = "SELECT " + TG_ID + " FROM " + TABLE_GENRE + " WHERE " + TG_GENRE + " LIKE ?";
         }
+        Cursor cursor = db.rawQuery(slctquery, new String [] {text});
+        cursor.moveToFirst();
+        long id = Integer.valueOf(cursor.getString(0));
+        return id;
     }
 
     public boolean IsAlreadyInDatabase(String text, int n){
@@ -394,23 +409,17 @@ public class Database extends SQLiteOpenHelper {
         String slctQuery;
         Cursor cursor;
         if(n == 0) {
-            slctQuery = "SELECT _id from Ksiazki WHERE Tytuł LIKE '" + text + "'";
-            cursor = db.rawQuery(slctQuery,null);
-            if(cursor.getCount() > 0) return true;
-            else return false;
+            slctQuery = "SELECT " + TB_ID + " FROM " + TABLE_BOOKS + " WHERE " + TB_TITLE + " LIKE ?";
         }
         else if(n == 1) {
-            slctQuery = "SELECT a._id from Autor a WHERE (a.Imię || ' ' || a.Nazwisko) LIKE '" + text + "'";
-            cursor = db.rawQuery(slctQuery,null);
-            if(cursor.getCount() > 0) return true;
-            else return false;
+            slctQuery = "SELECT " + TA_ID + " FROM " + TABLE_AUTHOR + " WHERE (" + TA_FIRST_NAME + " || ' ' || " + TA_LAST_NAME + ") LIKE ?";
         }
         else {
-            slctQuery = "SELECT _id from Gatunek WHERE Gatunek LIKE '" + text + "'";
-            cursor = db.rawQuery(slctQuery,null);
-            if(cursor.getCount() > 0) return true;
-            else return false;
+            slctQuery = "SELECT " + TG_ID + " FROM " + TABLE_GENRE + " WHERE " + TG_GENRE + " LIKE ?";
         }
+        cursor = db.rawQuery(slctQuery, new String[] {text});
+        if(cursor.getCount() > 0) return true;
+        else return false;
     }
 
     //Dealing with book covers
