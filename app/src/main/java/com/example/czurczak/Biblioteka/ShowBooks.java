@@ -2,7 +2,6 @@ package com.example.czurczak.Biblioteka;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,33 +12,32 @@ import android.widget.SimpleCursorAdapter;
 /**
  * Created by czurczak on 14.09.2016.
  */
-public class ShowResults extends AppCompatActivity {
+public class ShowBooks extends AppCompatActivity {
     final Database db = new Database(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.db_listview);
-        ListView myList = (ListView)findViewById(R.id.db_listview);
+        setContentView(R.layout.show_books_listview);
+        ListView myList = (ListView)findViewById(R.id.books_listview);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         Bundle b = getIntent().getExtras();
         if(b != null){
             String spinner = b.getString("Spinner"); //get spinner and
             String phrase = b.getString("Phrase");   //searching phrase value from Search class
-            Cursor cursor = db.ShowSelected(spinner, phrase);
+            Cursor cursor = db.ShowSelectedBooks(spinner, phrase);
             myList.setAdapter(ListViewLayout(cursor));
             db.RecordCount(getApplicationContext(), cursor);
             db.close();
         }
         else  {
-            myList.setAdapter(ListViewLayout(db.ShowAll()));
+            myList.setAdapter(ListViewLayout(db.ShowAllBooks()));
             db.close();
         }
     }
 
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
-
 
         //mapping from cursor to view fields
         String[] fromColNames = new String[] {
@@ -65,7 +63,7 @@ public class ShowResults extends AppCompatActivity {
 
         SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
                 this,
-                R.layout.show_all,
+                R.layout.show_books,
                 cursor,
                 fromColNames,
                 toViewIDs

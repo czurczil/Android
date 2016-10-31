@@ -13,11 +13,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button show_all_but = (Button)findViewById(R.id.button);
-        show_all_but.setOnClickListener(new View.OnClickListener() {
+        Button show_all_books_but = (Button)findViewById(R.id.button);
+        show_all_books_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ShowResults.class);
+                Intent intent = new Intent(getApplicationContext(), ShowBooks.class);
+                startActivity(intent);
+            }
+        });
+
+        Button show_all_authors_but = (Button)findViewById(R.id.button4);
+        show_all_authors_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ShowAuthors.class);
                 startActivity(intent);
             }
         });
@@ -39,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
 
     }
 }

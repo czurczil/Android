@@ -3,7 +3,6 @@ package com.example.czurczak.Biblioteka;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,7 +40,7 @@ public class Search extends AppCompatActivity implements AdapterView.OnItemSelec
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ShowResults.class);
+                Intent intent = new Intent(getApplicationContext(), ShowBooks.class);
                 intent.putExtra("Spinner", String.valueOf(spinner.getSelectedItem()));
                 intent.putExtra("Phrase", phrase.getText().toString());
                 startActivity(intent);

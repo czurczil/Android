@@ -119,8 +119,34 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //Displaying results
-    public Cursor ShowAll(){
+    public Cursor ShowAllAuthors(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor;
+        String slctQuery = "SELECT " + TA_ID + ", (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") AS Autor" +
+                " FROM " + TABLE_AUTHOR;
+        cursor = db.rawQuery(slctQuery, null);
+
+        if(cursor != null)
+            cursor.move(0);
+        return cursor;
+    }
+    public Cursor ShowSelectedAuthor(String author){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor;
+        String slctQuery = "SELECT " + TA_ID + ", (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") AS Autor, " +
+                TA_BIRTH_DATE + ", " + TA_SEX + ", " + TA_BIRTH_PLACE + ", " + TA_BIO + ", " + TA_PHOTO +
+                " FROM " + TABLE_AUTHOR + " WHERE " + "(" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") LIKE ?;";
+        cursor = db.rawQuery(slctQuery, new String[] {author});
+
+        if(cursor != null)
+            cursor.move(0);
+        return cursor;
+    }
+
+    //Displaying results for Books
+    public Cursor ShowAllBooks(){
         SQLiteDatabase db = getReadableDatabase();
 
  /*       String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, k.Okładka, g.Gatunek from Ksiazki k " +
@@ -143,7 +169,7 @@ public class Database extends SQLiteOpenHelper {
             cursor.move(0);
         return cursor;
     }
-    public Cursor ShowSelected (String spinner, String text){
+    public Cursor ShowSelectedBooks(String spinner, String text){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
 
