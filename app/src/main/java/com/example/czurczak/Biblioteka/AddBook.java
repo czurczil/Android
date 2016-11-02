@@ -52,7 +52,7 @@ public class AddBook extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isEmpty(title) == false && isEmpty(year) == false) {
+                if(isEmpty(title) == false && isEmpty(year) == false && isEmpty(genre) == false) {
                     Intent intent = new Intent(getApplicationContext(), AddAuthor.class);
                     intent.putExtra("Tytuł", (title.getText()).toString());
                     intent.putExtra("Rok wydania", (year.getText()).toString());

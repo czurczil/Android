@@ -99,7 +99,7 @@ public class AddAuthor extends AppCompatActivity {
                                 String.valueOf(sex.getSelectedItem()),
                                 bio.getText().toString(),
                                 photo,
-                                db.BoundBook(title , 0)
+                                db.GetID(title , 0)
                         );
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -115,7 +115,7 @@ public class AddAuthor extends AppCompatActivity {
                                 cycle,
                                 cover,
                                 genre,
-                                db.BoundBook((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1)
+                                db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1)
                         );
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -137,7 +137,7 @@ public class AddAuthor extends AppCompatActivity {
                                 String.valueOf(sex.getSelectedItem()),
                                 bio.getText().toString(),
                                 photo,
-                                db.BoundBook(genre, 2)
+                                db.GetID(genre, 2)
                         );
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -147,7 +147,7 @@ public class AddAuthor extends AppCompatActivity {
                     else if(db.IsAlreadyInDatabase(title, 0) == true
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
                             && db.IsAlreadyInDatabase(genre, 3) == false) {
-                        db.AddGenre(genre,db.BoundBook(title, 0), db.BoundBook((first_name.getText()).toString() + " " + (last_name.getText()).toString(),1));
+                        db.Bound(genre,db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(),1));
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
@@ -163,8 +163,8 @@ public class AddAuthor extends AppCompatActivity {
                                 String.valueOf(sex.getSelectedItem()),
                                 bio.getText().toString(),
                                 photo,
-                                db.BoundBook(title, 0),
-                                db.BoundBook(genre, 2)
+                                db.GetID(title, 0),
+                                db.GetID(genre, 2)
                         );
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -179,16 +179,34 @@ public class AddAuthor extends AppCompatActivity {
                                 description,
                                 cycle,
                                 cover,
-                                db.BoundBook((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1),
-                                db.BoundBook(genre, 2)
+                                db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1),
+                                db.GetID(genre, 2)
                         );
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     }
-                    //Jeśli wszystko juz jest
+                    //Jeśli wszystko juz jest ale ten gatunek nie jest przypisany do ksiazki
+                    else  if(db.IsAlreadyInDatabase(title, 0) == true
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
+                            && db.IsAlreadyInDatabase(genre, 3) == true && db.IsBoundedToThatBook(db.GetID(title, 0), db.GetID(genre, 2), 0) == false) {
+                        db.Bound(db.GetID(genre, 2), db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1));
+                        Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    //Jeśli wszystko juz jest ale ten autor nie jest przypisany do ksiazki
+                    else  if(db.IsAlreadyInDatabase(title, 0) == true
+                            && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
+                            && db.IsBoundedToThatBook(db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1), 1) == false
+                            && db.IsAlreadyInDatabase(genre, 3) == true) {
+                        db.Bound(db.GetID(genre, 2), db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1));
+                        Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
                     else {
-                        Toast.makeText(getApplicationContext(), "Taka książka znajduje się już w zbiorze", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Taka książka jest już w bazie danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     }

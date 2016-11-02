@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 /**
  * Created by czurczak on 14.09.2016.
@@ -47,8 +48,9 @@ public class ShowBooks extends AppCompatActivity {
                 db.TB_YEAR,
                 db.TB_DESC,
                 db.TB_CYKLE,
-                db.TG_GENRE,
-                db.TB_COVER
+                db.TB_COVER,
+                db.TG_GENRE
+
         };
         int[] toViewIDs = new int[] {
                 R.id.tvID,
@@ -57,8 +59,8 @@ public class ShowBooks extends AppCompatActivity {
                 R.id.tvYear,
                 R.id.tvDesc,
                 R.id.tvCycle,
-                R.id.tvGenre,
-                R.id.imgCover
+                R.id.imgCover,
+                R.id.tvGenre
         };
 
         SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
@@ -73,6 +75,7 @@ public class ShowBooks extends AppCompatActivity {
                 @Override
                 public boolean setViewValue(View view, Cursor cursor, int colIndex) {
                     //String name = cursor.getString(colIndex);
+
                     if (view.getId() == R.id.imgCover) {
                     /*ImageView IV=(ImageView) view;                                                            Commented section
                     String pack =  getApplicationContext().getPackageName();                                    set cover src to drawable
