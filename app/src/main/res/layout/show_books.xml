@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:drawable/alert_dark_frame">
+    android:background="@android:drawable/alert_dark_frame"
+    android:elevation="1dp">
 
     <TextView
         android:text="Opis"
@@ -31,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imgCover"
         android:layout_toRightOf="@+id/imgCover"
-        android:layout_toEndOf="@+id/imgCover">
+        android:layout_toEndOf="@+id/imgCover"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:text="Tytuł"
@@ -81,7 +83,21 @@
                 android:layout_weight="1"
                 android:textColor="@android:color/background_light"
                 android:textAlignment="center" />
+
         </LinearLayout>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/btn_star_big_off"
+            android:id="@+id/image_button"
+            android:layout_above="@+id/tvDesc"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:layout_gravity="right"
+            android:background="@android:color/background_dark"
+            android:focusable="false" />
     </LinearLayout>
 
     <ImageView
@@ -92,6 +108,8 @@
         android:background="@android:drawable/alert_dark_frame"
         android:layout_below="@+id/tvID"
        />
+
+
 
     <TextView
         android:text="#"

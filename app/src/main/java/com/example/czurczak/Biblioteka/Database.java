@@ -157,8 +157,9 @@ public class Database extends SQLiteOpenHelper {
         String slctQuery = "SELECT " + TABLE_BOOKS + "." + TB_ID + ", " +
                 "GROUP_CONCAT(DISTINCT " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " || ' ' || " + TABLE_AUTHOR + "." + TA_LAST_NAME +") AS Autor, " +
                 TABLE_BOOKS + "." + TB_TITLE + ", " + TABLE_BOOKS + "." + TB_YEAR + ", " + TABLE_BOOKS + "." + TB_DESC + ", " +
-                TABLE_BOOKS + "." + TB_CYKLE + ", " + TABLE_BOOKS + "." + TB_COVER + ", GROUP_CONCAT(DISTINCT " + TABLE_GENRE + "." + TG_GENRE + ") AS Gatunek " +
-                "FROM " + TABLE_BOOKS +
+                TABLE_BOOKS + "." + TB_CYKLE + ", " + TABLE_BOOKS + "." + TB_COVER + ", GROUP_CONCAT(DISTINCT " + TABLE_GENRE + "." + TG_GENRE + ") AS Gatunek, " +
+                TABLE_BOOKS + "." + TB_FAVORITE +
+                " FROM " + TABLE_BOOKS +
                 " LEFT JOIN " + TABLE_AUTHOR_BOOKS + " ON ("+ TABLE_BOOKS + "." + TB_ID +"=" + TABLE_AUTHOR_BOOKS + "." + TAB_BOOK_ID +") " +
                 "LEFT JOIN " + TABLE_AUTHOR + " ON ("+ TABLE_AUTHOR_BOOKS + "." + TAB_AUTHOR_ID +"=" + TABLE_AUTHOR + "." + TA_ID + ") " +
                 "LEFT JOIN " + TABLE_BOOKS_GENRE + " ON (" + TABLE_BOOKS + "." + TB_ID + "=" + TABLE_BOOKS_GENRE + "." + TBG_BOOK_ID + ") " +
@@ -183,8 +184,9 @@ public class Database extends SQLiteOpenHelper {
         String slctQuery = "SELECT " + TABLE_BOOKS + "." + TB_ID + ", " +
                 "GROUP_CONCAT(DISTINCT " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " || ' ' || " + TABLE_AUTHOR + "." + TA_LAST_NAME +") AS Autor, " +
                 TABLE_BOOKS + "." + TB_TITLE + ", " + TABLE_BOOKS + "." + TB_YEAR + ", " + TABLE_BOOKS + "." + TB_DESC + ", " +
-                TABLE_BOOKS + "." + TB_CYKLE + ", " + TABLE_BOOKS + "." + TB_COVER + ", GROUP_CONCAT(DISTINCT " + TABLE_GENRE + "." + TG_GENRE + ") AS Gatunek " +
-                "FROM " + TABLE_BOOKS +
+                TABLE_BOOKS + "." + TB_CYKLE + ", " + TABLE_BOOKS + "." + TB_COVER + ", GROUP_CONCAT(DISTINCT " + TABLE_GENRE + "." + TG_GENRE + ") AS Gatunek, " +
+                TABLE_BOOKS + "." + TB_FAVORITE +
+                " FROM " + TABLE_BOOKS +
                 " LEFT JOIN " + TABLE_AUTHOR_BOOKS + " ON ("+ TABLE_BOOKS + "." + TB_ID +"=" + TABLE_AUTHOR_BOOKS + "." + TAB_BOOK_ID +") " +
                 "LEFT JOIN " + TABLE_AUTHOR + " ON ("+ TABLE_AUTHOR_BOOKS + "." + TAB_AUTHOR_ID +"=" + TABLE_AUTHOR + "." + TA_ID + ") " +
                 "LEFT JOIN " + TABLE_BOOKS_GENRE + " ON (" + TABLE_BOOKS + "." + TB_ID + "=" + TABLE_BOOKS_GENRE + "." + TBG_BOOK_ID + ") " +
@@ -445,7 +447,7 @@ public class Database extends SQLiteOpenHelper {
         else {
             slctquery = "SELECT " + TG_ID + " FROM " + TABLE_GENRE + " WHERE " + TG_GENRE + " LIKE ?";
         }
-        Cursor cursor = db.rawQuery(slctquery, new String [] {text});
+        Cursor cursor = db.rawQuery(slctquery, new String [] {"%" + text + "%"});
         cursor.moveToFirst();
         long id = Integer.valueOf(cursor.getString(0));
         return id;
@@ -477,7 +479,7 @@ public class Database extends SQLiteOpenHelper {
         else {
             slctQuery = "SELECT " + TG_ID + " FROM " + TABLE_GENRE + " WHERE " + TG_GENRE + " LIKE ?";
         }
-        cursor = db.rawQuery(slctQuery, new String[] {text});
+        cursor = db.rawQuery(slctQuery, new String[] {"%" + text + "%"});
         if(cursor.getCount() > 0) return true;
         else return false;
     }
