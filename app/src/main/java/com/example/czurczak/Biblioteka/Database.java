@@ -3,11 +3,14 @@ package com.example.czurczak.Biblioteka;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.Toast;
@@ -20,7 +23,7 @@ import java.io.InputStream;
  */
 public class Database extends SQLiteOpenHelper {
     public Database(Context context){
-        super(context, "Biblioteka2.db", null, 6);
+        super(context, "Biblioteka2.db", null, 8);
     }
 
     public static final String DATABASE_NAME = "Biblioteka2.db";
@@ -123,7 +126,7 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor;
-        String slctQuery = "SELECT " + TA_ID + ", (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") AS Autor" +
+        String slctQuery = "SELECT " + TA_ID + ", (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") AS Autor, " + TA_PHOTO +
                 " FROM " + TABLE_AUTHOR;
         cursor = db.rawQuery(slctQuery, null);
 
@@ -225,6 +228,32 @@ public class Database extends SQLiteOpenHelper {
             return cursor;
 
     }
+    public Cursor ShowSelectedBooks(String text){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
+
+        String slctQuery = "SELECT " + TABLE_BOOKS + "." + TB_ID + ", " +
+                "GROUP_CONCAT(DISTINCT " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " || ' ' || " + TABLE_AUTHOR + "." + TA_LAST_NAME +") AS Autor, " +
+                TABLE_BOOKS + "." + TB_TITLE + ", " + TABLE_BOOKS + "." + TB_YEAR + ", " + TABLE_BOOKS + "." + TB_DESC + ", " +
+                TABLE_BOOKS + "." + TB_CYKLE + ", " + TABLE_BOOKS + "." + TB_COVER + ", GROUP_CONCAT(DISTINCT " + TABLE_GENRE + "." + TG_GENRE + ") AS Gatunek, " +
+                TABLE_BOOKS + "." + TB_FAVORITE +
+                " FROM " + TABLE_BOOKS +
+                " LEFT JOIN " + TABLE_AUTHOR_BOOKS + " ON ("+ TABLE_BOOKS + "." + TB_ID +"=" + TABLE_AUTHOR_BOOKS + "." + TAB_BOOK_ID +") " +
+                "LEFT JOIN " + TABLE_AUTHOR + " ON ("+ TABLE_AUTHOR_BOOKS + "." + TAB_AUTHOR_ID +"=" + TABLE_AUTHOR + "." + TA_ID + ") " +
+                "LEFT JOIN " + TABLE_BOOKS_GENRE + " ON (" + TABLE_BOOKS + "." + TB_ID + "=" + TABLE_BOOKS_GENRE + "." + TBG_BOOK_ID + ") " +
+                "LEFT JOIN " + TABLE_GENRE + " ON (" + TABLE_BOOKS_GENRE + "." + TBG_GENRE_ID + "=" + TABLE_GENRE + "." + TG_ID + ") ";
+
+        slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_TITLE +" LIKE ? " +
+                    "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
+
+            cursor = db.rawQuery(slctQuery, new String[]{"%" + text + "%"});
+
+        if (cursor != null)
+            cursor.move(0);
+        return cursor;
+
+    }
+
     public void RecordCount(Context context,Cursor cursor){
         int count = cursor.getCount();
         if(count == 1) Toast.makeText(context, "Znaleziono " + cursor.getCount()+ " wynik", Toast.LENGTH_SHORT).show();
@@ -484,14 +513,27 @@ public class Database extends SQLiteOpenHelper {
         else return false;
     }
 
+    public byte[] GetImage(Drawable drawable){
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitmapdata = stream.toByteArray();
+        return bitmapdata;
+    }
     //Dealing with book covers
-    public Bitmap GetImage(Cursor c){
-                byte[] image = c.getBlob(6);
-        if(image != null) {
+    public Bitmap GetImage(Cursor c, int n){
+
+        String column;
+        if(n == 0) column = "Okładka";
+        else column = "Zdjęcie";
+            int img = c.getColumnIndex(column);
+
+            byte[] image = c.getBlob(img);
+            if (image != null) {
                 Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
                 return bmp;
             }
-        else return null;
+            else return null;
     }
     public byte[] SaveImageFromGallery(ContentResolver cr, Uri imageUri){
 

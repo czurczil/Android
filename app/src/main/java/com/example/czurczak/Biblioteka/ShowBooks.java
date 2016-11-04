@@ -1,5 +1,6 @@
 package com.example.czurczak.Biblioteka;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +31,6 @@ public class ShowBooks extends AppCompatActivity {
             String phrase = b.getString("Phrase");   //searching phrase value from Search class
             Cursor cursor = db.ShowSelectedBooks(spinner, phrase);
 
-            //SetFavoriteButton(cursor);
             ListViewLayout(cursor);
 
             db.RecordCount(getApplicationContext(), cursor);
@@ -38,11 +38,15 @@ public class ShowBooks extends AppCompatActivity {
         }
         else  {
             Cursor cursor = db.ShowAllBooks();
-
-            //SetFavoriteButton(cursor);
             ListViewLayout(cursor);
             db.close();
         }
+    }
+    public void onClick(View view){
+        Intent intent = new Intent (getApplicationContext(), ShowBooksDetails.class);
+        String title = ((TextView)(view.findViewById(R.id.tvTitle))).getText().toString();
+        intent.putExtra("Title", title);
+        startActivity(intent);
     }
 
     public void ListViewLayout(Cursor cursor){
@@ -52,21 +56,13 @@ public class ShowBooks extends AppCompatActivity {
                 db.TB_ID,
                 db.TB_TITLE,
                 db.KEY_AUTHOR,
-                db.TB_YEAR,
-                db.TB_DESC,
-                db.TB_CYKLE,
-                db.TB_COVER,
-                db.TG_GENRE
+                db.TB_COVER
         };
         int[] toViewIDs = new int[] {
                 R.id.tvID,
                 R.id.tvTitle,
                 R.id.tvAuthor,
-                R.id.tvYear,
-                R.id.tvDesc,
-                R.id.tvCycle,
-                R.id.imgCover,
-                R.id.tvGenre
+                R.id.imgCover
         };
 
         SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
@@ -87,7 +83,7 @@ public class ShowBooks extends AppCompatActivity {
                     String pack =  getApplicationContext().getPackageName();                                    set cover src to drawable
                     int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
                     IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));*/
-                        ((ImageView) view).setImageBitmap(db.GetImage(cursor));
+                        ((ImageView) view).setImageBitmap(db.GetImage(cursor, 0));
                         return true;
                     }
                     return false;
@@ -108,12 +104,5 @@ public class ShowBooks extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-/*    public void SetFavoriteButton(Cursor cursor){
-        cursor.moveToFirst();
-        ImageButton favorite_button = (ImageButton) findViewById(R.id.image_button);
-        int isFavorite = cursor.getInt(cursor.getColumnIndex(db.TB_FAVORITE));
-        if(isFavorite == 1)
-            favorite_button.setImageResource(android.R.drawable.btn_star_big_on);
-        else favorite_button.setImageResource(android.R.drawable.btn_star_big_off);
-    }*/
+
 }

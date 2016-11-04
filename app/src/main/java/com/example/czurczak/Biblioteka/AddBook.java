@@ -1,6 +1,8 @@
 package com.example.czurczak.Biblioteka;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,7 @@ public class AddBook extends AppCompatActivity {
     private final Database db = new Database(this);
     private static ImageView imageView;
     private static byte[] cover;
+    private Drawable drawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,10 @@ public class AddBook extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isEmpty(title) == false && isEmpty(year) == false && isEmpty(genre) == false) {
+                    if(cover == null) {
+                        drawable = getResources().getDrawable(R.drawable.no_cover);
+                        cover = db.GetImage(drawable);
+                    }
                     Intent intent = new Intent(getApplicationContext(), AddAuthor.class);
                     intent.putExtra("Tytuł", (title.getText()).toString());
                     intent.putExtra("Rok wydania", (year.getText()).toString());

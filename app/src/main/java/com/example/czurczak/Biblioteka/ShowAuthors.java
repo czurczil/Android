@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -37,11 +38,13 @@ public class ShowAuthors extends AppCompatActivity {
 
         String[] fromColNames = new String[] {
                 db.TA_ID,
-                db.KEY_AUTHOR
+                db.KEY_AUTHOR,
+                db.TA_PHOTO
         };
         int[] toViewIDs = new int[] {
                 R.id.authors_id,
-                R.id.authors_name
+                R.id.authors_name,
+                R.id.imageView2
         };
 
         SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
@@ -51,6 +54,24 @@ public class ShowAuthors extends AppCompatActivity {
                 fromColNames,
                 toViewIDs
         );
+        if(cursor != null && cursor.moveToFirst()) {
+            myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+                @Override
+                public boolean setViewValue(View view, Cursor cursor, int colIndex) {
+                    //String name = cursor.getString(colIndex);
+
+                    if (view.getId() == R.id.imageView2) {
+                    /*ImageView IV=(ImageView) view;                                                            Commented section
+                    String pack =  getApplicationContext().getPackageName();                                    set cover src to drawable
+                    int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
+                    IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));*/
+                        ((ImageView) view).setImageBitmap(db.GetImage(cursor, 1));
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
 
         return myCursorAdapter;
     }

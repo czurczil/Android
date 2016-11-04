@@ -40,7 +40,7 @@ public class ShowAuthorsDetails extends AppCompatActivity {
             sex.setText(cursor.getString(3));
             birth_place.setText(cursor.getString(4));
             bio.setText(cursor.getString(5));
-            photo.setImageBitmap(db.GetImage(cursor));
+            photo.setImageBitmap(db.GetImage(cursor, 1));
         cursor.close();
         db.close();
     }

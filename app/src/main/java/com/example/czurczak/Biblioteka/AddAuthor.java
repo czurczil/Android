@@ -1,8 +1,10 @@
 package com.example.czurczak.Biblioteka;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,10 +25,15 @@ public class AddAuthor extends AppCompatActivity {
     private final Database db = new Database(this);
     private static ImageView imageView;
     private static byte[] photo;
+    private Drawable drawable;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_author);
+
+/*                sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse
+                ("file://"
+                        + Environment.getExternalStorageDirectory())));*/
 
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -66,6 +73,10 @@ public class AddAuthor extends AppCompatActivity {
                 byte[] cover = b.getByteArray("Okładka");
                 String genre = b.getString("Gatunek");
                 if(a.isEmpty(first_name) == false && a.isEmpty(last_name)==false) {
+                    if(photo == null){
+                        drawable = getResources().getDrawable(R.drawable.no_photo);
+                        photo = db.GetImage(drawable);
+                    }
                     //Jeśli nie ma jeszcze ani takiej ksiazki, ani autora, ani gatunku
                     if(db.IsAlreadyInDatabase(title, 0) == false
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
