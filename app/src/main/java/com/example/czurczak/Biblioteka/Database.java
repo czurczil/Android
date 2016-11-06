@@ -236,7 +236,7 @@ public class Database extends SQLiteOpenHelper {
                 "GROUP_CONCAT(DISTINCT " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " || ' ' || " + TABLE_AUTHOR + "." + TA_LAST_NAME +") AS Autor, " +
                 TABLE_BOOKS + "." + TB_TITLE + ", " + TABLE_BOOKS + "." + TB_YEAR + ", " + TABLE_BOOKS + "." + TB_DESC + ", " +
                 TABLE_BOOKS + "." + TB_CYKLE + ", " + TABLE_BOOKS + "." + TB_COVER + ", GROUP_CONCAT(DISTINCT " + TABLE_GENRE + "." + TG_GENRE + ") AS Gatunek, " +
-                TABLE_BOOKS + "." + TB_FAVORITE +
+                TABLE_BOOKS + "." + TB_FAVORITE + ", " + TABLE_BOOKS + "." + TB_ON_SHELF + ", " + TABLE_BOOKS + "." + TB_WISHES +
                 " FROM " + TABLE_BOOKS +
                 " LEFT JOIN " + TABLE_AUTHOR_BOOKS + " ON ("+ TABLE_BOOKS + "." + TB_ID +"=" + TABLE_AUTHOR_BOOKS + "." + TAB_BOOK_ID +") " +
                 "LEFT JOIN " + TABLE_AUTHOR + " ON ("+ TABLE_AUTHOR_BOOKS + "." + TAB_AUTHOR_ID +"=" + TABLE_AUTHOR + "." + TA_ID + ") " +
@@ -568,11 +568,23 @@ public class Database extends SQLiteOpenHelper {
         String[] ksiazki = {""+id};
         db.delete(TABLE_BOOKS, "_id=?", ksiazki);
     }
-    public void UpdateBook(int id){
+    public void UpdateFavorite(int id, int favorite){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Okładka","a180c50d773");
-        db.update(TABLE_BOOKS,values,"_id="+id, null);
+        values.put("Ulubione", favorite);
+        db.update(TABLE_BOOKS, values,"_id="+id, null);
+    }
+    public void UpdateMyShelf(int id, int shelf){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Na_polce", shelf);
+        db.update(TABLE_BOOKS, values,"_id="+id, null);
+    }
+    public void UpdateWishList(int id, int wish){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Do_przeczytania", wish);
+        db.update(TABLE_BOOKS, values,"_id="+id, null);
     }
 
     public SQLiteDatabase open(){

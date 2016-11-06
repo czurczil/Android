@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/all_books"
         android:title="Wszystkie książki"
-        android:icon="@mipmap/ic_book_white_48dp"/>
+        android:icon="@drawable/ic_book_white_48dp_off"/>
     <item android:id="@+id/all_authors"
         android:title="Wszyscy autorzy"
-        android:icon="@mipmap/ic_people_white_48dp"/>
+        android:icon="@drawable/ic_people_white_48dp_off"/>
     <item android:id="@+id/my_shelf"
         android:title="Moja półka"
-        android:icon="@mipmap/ic_storage_white_48dp"/>
+        android:icon="@drawable/ic_storage_white_48dp_off"/>
     <item android:id="@+id/my_favorites"
         android:title="Moje ulubione"
-        android:icon="@mipmap/ic_favorite_white_48dp"/>
+        android:icon="@drawable/ic_favorite_white_48dp_off"/>
     <item android:id="@+id/wish_list"
         android:title="Do przeczytania"
-        android:icon="@mipmap/ic_assignment_white_48dp"/>
+        android:icon="@drawable/ic_assignment_white_48dp_off"/>
 </menu>
