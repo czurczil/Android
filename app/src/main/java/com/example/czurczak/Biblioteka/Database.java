@@ -178,12 +178,6 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
 
-
- /*           String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, k.Okładka, g.Gatunek from Ksiazki k " +
-                    "LEFT JOIN Ksiazki_Autorów ka ON (k._id=ka.id_Ksiazki) " +
-                    "LEFT JOIN Autor a ON (ka.id_Autora=a._id) " +
-                    "LEFT JOIN Gatunki_Ksiazek gk ON (k._id=gk.id_Ksiazki) " +
-                    "LEFT JOIN Gatunek g ON (gk.id_Gatunku=g._id)";*/
         String slctQuery = "SELECT " + TABLE_BOOKS + "." + TB_ID + ", " +
                 "GROUP_CONCAT(DISTINCT " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " || ' ' || " + TABLE_AUTHOR + "." + TA_LAST_NAME +") AS Autor, " +
                 TABLE_BOOKS + "." + TB_TITLE + ", " + TABLE_BOOKS + "." + TB_YEAR + ", " + TABLE_BOOKS + "." + TB_DESC + ", " +
@@ -243,10 +237,28 @@ public class Database extends SQLiteOpenHelper {
                 "LEFT JOIN " + TABLE_BOOKS_GENRE + " ON (" + TABLE_BOOKS + "." + TB_ID + "=" + TABLE_BOOKS_GENRE + "." + TBG_BOOK_ID + ") " +
                 "LEFT JOIN " + TABLE_GENRE + " ON (" + TABLE_BOOKS_GENRE + "." + TBG_GENRE_ID + "=" + TABLE_GENRE + "." + TG_ID + ") ";
 
-        slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_TITLE +" LIKE ? " +
-                    "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
+        if(text.equals(TB_FAVORITE)){
+            slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_FAVORITE + " = 1 " +
+                    "GROUP BY " + TABLE_BOOKS + "." + TB_ID;
+            cursor = db.rawQuery(slctQuery, null);
+        }
+        else if(text.equals(TB_ON_SHELF)){
+            slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_ON_SHELF + " = 1 " +
+                    "GROUP BY " + TABLE_BOOKS + "." + TB_ID;
+            cursor = db.rawQuery(slctQuery, null);
+        }
+        else if(text.equals(TB_WISHES)){
+            slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_WISHES + " = 1 " +
+                    "GROUP BY " + TABLE_BOOKS + "." + TB_ID;
+            cursor = db.rawQuery(slctQuery, null);
+        }
+        else{
+            slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_TITLE + " LIKE ? " +
+                    "GROUP BY " + TABLE_BOOKS + "." + TB_ID;
 
-            cursor = db.rawQuery(slctQuery, new String[]{"%" + text + "%"});
+            cursor = db.rawQuery(slctQuery, new String[]{ text });
+        }
+
 
         if (cursor != null)
             cursor.move(0);
@@ -568,22 +580,23 @@ public class Database extends SQLiteOpenHelper {
         String[] ksiazki = {""+id};
         db.delete(TABLE_BOOKS, "_id=?", ksiazki);
     }
+
     public void UpdateFavorite(int id, int favorite){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Ulubione", favorite);
+        values.put(TB_FAVORITE, favorite);
         db.update(TABLE_BOOKS, values,"_id="+id, null);
     }
     public void UpdateMyShelf(int id, int shelf){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Na_polce", shelf);
+        values.put(TB_ON_SHELF, shelf);
         db.update(TABLE_BOOKS, values,"_id="+id, null);
     }
     public void UpdateWishList(int id, int wish){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("Do_przeczytania", wish);
+        values.put(TB_WISHES, wish);
         db.update(TABLE_BOOKS, values,"_id="+id, null);
     }
 

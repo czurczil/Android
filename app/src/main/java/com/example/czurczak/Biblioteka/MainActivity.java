@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
     private Intent menu_intent;
     private DrawerLayout drawer;
+    private Database db = new Database(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +92,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.my_shelf:
+                menu_intent = new Intent(getApplicationContext(), ShowBooks.class);
+                menu_intent.putExtra("Table", db.TB_ON_SHELF);
+                startActivity(menu_intent);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.my_favorites:
+                menu_intent = new Intent(getApplicationContext(), ShowBooks.class);
+                menu_intent.putExtra("Table", db.TB_FAVORITE);
+                startActivity(menu_intent);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.wish_list:
+                menu_intent = new Intent(getApplicationContext(), ShowBooks.class);
+                menu_intent.putExtra("Table", db.TB_WISHES);
+                startActivity(menu_intent);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             default:

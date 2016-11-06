@@ -25,11 +25,29 @@ public class ShowBooks extends AppCompatActivity {
         setContentView(R.layout.show_books_listview);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        String spinner = null;
+        String phrase = null;
+        String table = null;
         Bundle b = getIntent().getExtras();
         if(b != null){
-            String spinner = b.getString("Spinner"); //get spinner and
-            String phrase = b.getString("Phrase");   //searching phrase value from Search class
+            spinner = b.getString("Spinner"); //get spinner and
+            phrase = b.getString("Phrase");   //searching phrase value from Search class
+
+            table = b.getString("Table");
+        }
+
+
+        if(spinner != null && phrase != null && table == null){
+
             Cursor cursor = db.ShowSelectedBooks(spinner, phrase);
+
+            ListViewLayout(cursor);
+
+            db.RecordCount(getApplicationContext(), cursor);
+            db.close();
+        }
+        else if(table != null){
+            Cursor cursor = db.ShowSelectedBooks(table);
 
             ListViewLayout(cursor);
 
