@@ -20,7 +20,7 @@ public class ShowAuthorsDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_author_details);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
 
         Bundle b = getIntent().getExtras();
         Cursor cursor = db.ShowSelectedAuthor(b.getString("Author"));

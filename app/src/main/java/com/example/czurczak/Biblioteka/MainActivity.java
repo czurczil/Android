@@ -1,26 +1,44 @@
 package com.example.czurczak.Biblioteka;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ActionBarDrawerToggle toggle;
     private Intent menu_intent;
     private DrawerLayout drawer;
     private Database db = new Database(this);
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager.setAdapter(new SimpleFragmentPageAdapter(getSupportFragmentManager(), this));
+
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
@@ -33,9 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-
-        Button show_all_books_but = (Button)findViewById(R.id.button);
+       /* Button show_all_books_but = (Button)findViewById(R.id.button);
         show_all_books_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(getApplicationContext(), Search.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
 
     }
@@ -109,9 +125,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(menu_intent);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
+            case R.id.add_one:
+                menu_intent = new Intent(getApplicationContext(), AddBook.class);
+                startActivity(menu_intent);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.search:
+                menu_intent = new Intent(getApplicationContext(), Search.class);
+                startActivity(menu_intent);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
             default:
                 drawer.closeDrawer(GravityCompat.START);
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void onClickBooks(View v){
+        Intent intent = new Intent (getApplicationContext(), ShowBooksDetails.class);
+        String title = ((TextView)(v.findViewById(R.id.tvTitle))).getText().toString();
+        intent.putExtra("Title", title);
+        startActivity(intent);
+    }
+
+    public void onClickAuthors(View view){
+        Intent intent = new Intent (getApplicationContext(), ShowAuthorsDetails.class);
+        String autor = ((TextView)(view.findViewById(R.id.authors_name))).getText().toString();
+        intent.putExtra("Author", autor);
+        startActivity(intent);
     }
 }

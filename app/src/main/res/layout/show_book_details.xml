@@ -96,8 +96,7 @@
             app:srcCompat="@drawable/ic_assignment_white_48dp_off"
             android:id="@+id/on_wish_list_button"
             android:background="@android:color/background_dark"
-            android:focusable="false"
-            />
+            android:focusable="false" />
 
         <ImageButton
             android:layout_width="wrap_content"

@@ -28,7 +28,7 @@ public class AddBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_book);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         //Refresh the gallery
 /*        sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse

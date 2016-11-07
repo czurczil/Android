@@ -32,7 +32,7 @@ public class ShowBooksDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_book_details);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         Bundle b = getIntent().getExtras();
         final Cursor cursor = db.ShowSelectedBooks(b.getString("Title"));

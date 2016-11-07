@@ -1,5 +1,6 @@
 package com.example.czurczak.Biblioteka;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -22,8 +23,11 @@ import java.io.InputStream;
  * Created by czurczak on 12.09.2016.
  */
 public class Database extends SQLiteOpenHelper {
+    public Context context;
+
     public Database(Context context){
         super(context, "Biblioteka2.db", null, 8);
+        this.context = context;
     }
 
     public static final String DATABASE_NAME = "Biblioteka2.db";

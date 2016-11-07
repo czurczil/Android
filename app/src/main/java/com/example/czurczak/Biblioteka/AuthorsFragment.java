@@ -1,40 +1,43 @@
 package com.example.czurczak.Biblioteka;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 /**
- * Created by czurczak on 31.10.2016.
+ * Created by czurczak on 06.11.2016.
  */
 
-public class ShowAuthors extends AppCompatActivity {
-    final Database db = new Database(this);
+public class AuthorsFragment extends Fragment {
+    View v;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.show_authors_listview);
-        ListView myList = (ListView)findViewById(R.id.authors_listview);
-        //getSupportActionBar().setHomeButtonEnabled(true);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.show_authors_listview, container, false);
 
-        myList.setAdapter(ListViewLayout(db.ShowAllAuthors()));
+        Database db = new Database(getActivity());
+
+        Cursor cursor = db.ShowAllAuthors();
+
+        ListView myList = (ListView)v.findViewById(R.id.authors_listview);
+
+        myList.setAdapter(ListViewLayout(cursor));
+
         db.close();
 
-    }
-    public void onClickAuthors(View view){
-        Intent intent = new Intent (getApplicationContext(), ShowAuthorsDetails.class);
-        String autor = ((TextView)(view.findViewById(R.id.authors_name))).getText().toString();
-        intent.putExtra("Author", autor);
-        startActivity(intent);
+        return v;
     }
 
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
+
+        final Database db = new Database(getActivity());
 
         String[] fromColNames = new String[] {
                 db.TA_ID,
@@ -48,7 +51,7 @@ public class ShowAuthors extends AppCompatActivity {
         };
 
         SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
-                this,
+                getActivity(),
                 R.layout.show_authors,
                 cursor,
                 fromColNames,
@@ -75,5 +78,4 @@ public class ShowAuthors extends AppCompatActivity {
 
         return myCursorAdapter;
     }
-
 }

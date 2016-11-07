@@ -19,7 +19,7 @@ public class Search extends AppCompatActivity implements AdapterView.OnItemSelec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         final EditText phrase = (EditText)findViewById(R.id.editText);
 

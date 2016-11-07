@@ -3,7 +3,9 @@ package com.example.czurczak.Biblioteka;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +25,6 @@ public class ShowBooks extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_books_listview);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         String spinner = null;
         String phrase = null;
@@ -60,7 +61,7 @@ public class ShowBooks extends AppCompatActivity {
             db.close();
         }
     }
-    public void onClick(View view){
+    public void onClickBooks(View view){
         Intent intent = new Intent (getApplicationContext(), ShowBooksDetails.class);
         String title = ((TextView)(view.findViewById(R.id.tvTitle))).getText().toString();
         intent.putExtra("Title", title);
@@ -122,5 +123,7 @@ public class ShowBooks extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
 }

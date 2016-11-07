@@ -35,7 +35,7 @@ public class AddAuthor extends AppCompatActivity {
                 ("file://"
                         + Environment.getExternalStorageDirectory())));*/
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         final EditText first_name = (EditText)findViewById(R.id.first_name);
         final EditText last_name = (EditText)findViewById(R.id.last_name);
