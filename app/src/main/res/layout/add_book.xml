@@ -12,6 +12,11 @@
         android:background="@android:color/background_dark"
         android:id="@+id/edit_texts">
 
+        <include
+            layout="@layout/activity_main_toolbar"
+            android:id="@+id/app_toolbar"
+            />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

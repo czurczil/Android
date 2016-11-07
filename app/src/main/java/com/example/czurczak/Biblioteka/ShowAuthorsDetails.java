@@ -3,6 +3,7 @@ package com.example.czurczak.Biblioteka;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +21,10 @@ public class ShowAuthorsDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_author_details);
-        //getSupportActionBar().setHomeButtonEnabled(true);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         Bundle b = getIntent().getExtras();
         Cursor cursor = db.ShowSelectedAuthor(b.getString("Author"));

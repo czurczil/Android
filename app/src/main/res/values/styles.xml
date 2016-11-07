@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -6,14 +6,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="drawerArrowStyle">@style/NavigationDrawerStyle</item>
     </style>
 
-    <style name="NavigationDrawerStyle">
+    <style name="NavigationDrawerStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="android:textSize">24sp</item>
         <item name="android:listPreferredItemHeightSmall">40dp</item>
         <item name="android:typeface">sans</item>
         <item name="android:textStyle">normal</item>
         <item name="android:paddingTop">5dp</item>
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
     </style>
 
 </resources>

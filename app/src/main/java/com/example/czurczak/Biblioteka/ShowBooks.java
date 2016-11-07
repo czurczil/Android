@@ -26,6 +26,10 @@ public class ShowBooks extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_books_listview);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         String spinner = null;
         String phrase = null;
         String table = null;

@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new SimpleFragmentPageAdapter(getSupportFragmentManager(), this));
@@ -49,44 +50,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-       /* Button show_all_books_but = (Button)findViewById(R.id.button);
-        show_all_books_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ShowBooks.class);
-                startActivity(intent);
-            }
-        });
-
-        Button show_all_authors_but = (Button)findViewById(R.id.button4);
-        show_all_authors_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ShowAuthors.class);
-                startActivity(intent);
-            }
-        });
-
-        Button add_one_but = (Button) findViewById(R.id.button2);
-        add_one_but.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddBook.class);
-                startActivity(intent);
-            }
-        });
-
-        Button search_but = (Button) findViewById(R.id.button3);
-        search_but.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Search.class);
-                startActivity(intent);
-            }
-        });*/
-
 
     }
     @Override

@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/abc_input_method_navigation_guard"
     android:weightSum="1">
+    <include
+        layout="@layout/activity_main_toolbar"
+        android:id="@+id/app_toolbar"
+        />
 
     <Spinner
         android:layout_width="match_parent"

@@ -1,151 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/background_dark"
-    android:elevation="1dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:text="Opis"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvDesc"
-        android:layout_marginTop="10dp"
-        android:textColor="@android:color/background_light"
-        android:textSize="20sp"
-        android:layout_below="@+id/imgCover"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:background="@android:color/background_dark"
+        android:elevation="1dp">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/tvDesc"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <include
+            layout="@layout/activity_main_toolbar"
+            android:id="@+id/app_toolbar"
+            />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imgCover"
-        android:layout_toRightOf="@+id/imgCover"
-        android:layout_toEndOf="@+id/imgCover"
-        android:id="@+id/linearLayout">
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="#"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/hasz"
+            android:textColor="@android:color/background_light" />
 
         <TextView
-            android:text="Tytuł"
-            android:layout_width="match_parent"
+            android:text="ID"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvTitle"
-            android:textSize="30sp"
-            android:textColor="@android:color/background_light"
-            android:textAlignment="center" />
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/hasz"
+            android:layout_toEndOf="@+id/hasz"
+            android:id="@+id/tvID"
+            android:textColor="@android:color/background_light" />
+    </LinearLayout>
 
-        <TextView
-            android:text="Autor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvAuthor"
-            android:textColor="@android:color/background_light"
-            android:textSize="20sp"
-            android:textAlignment="center" />
 
-        <TextView
-            android:text="Rok wydania"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvYear"
-            android:textColor="@android:color/background_light"
-            android:textAlignment="center" />
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/imgCover"
+            android:background="@android:drawable/alert_dark_frame"
+            android:layout_gravity="center"
+            />
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout">
 
             <TextView
-                android:text="Cykl"
-                android:layout_width="wrap_content"
+                android:text="Tytuł"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvCycle"
-                android:layout_weight="1"
+                android:id="@+id/tvTitle"
+                android:textSize="40sp"
                 android:textColor="@android:color/background_light"
                 android:textAlignment="center" />
 
             <TextView
-                android:text="Gatunek"
-                android:layout_width="wrap_content"
+                android:text="Autor"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvGenre"
-                android:layout_weight="1"
+                android:id="@+id/tvAuthor"
+                android:textColor="@android:color/background_light"
+                android:textSize="25sp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:text="Rok wydania"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvYear"
+                android:textSize="20sp"
                 android:textColor="@android:color/background_light"
                 android:textAlignment="center" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Cykl:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/background_light"
+                    android:textAlignment="textStart"
+                    android:translationX="40dp" />
+
+                <TextView
+                    android:text="Gatunek:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/background_light"
+                    android:textAlignment="textEnd"
+                    android:translationX="-40dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="2">
+
+                <TextView
+                    android:text="Cykl"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCycle"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/background_light"
+                    android:textAlignment="textStart"
+                    android:translationX="40dp"/>
+
+                <TextView
+                    android:text="Gatunek"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvGenre"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/background_light"
+                    android:textAlignment="textEnd"
+                    android:translationX="-40dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_assignment_white_48dp_off"
+                android:id="@+id/on_wish_list_button"
+                android:background="@android:color/background_dark"
+                android:focusable="false"
+                android:translationX="-30dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_storage_white_48dp_off"
+                android:id="@+id/on_my_shelf_button"
+                android:background="@android:color/background_dark"
+                android:focusable="false" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_favorite_white_48dp_off"
+                android:id="@+id/favorite_button"
+                android:background="@android:color/background_dark"
+                android:focusable="false"
+                android:translationX="30dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <ImageButton
-            android:layout_width="wrap_content"
+        <TextView
+            android:text="Opis:"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_assignment_white_48dp_off"
-            android:id="@+id/on_wish_list_button"
-            android:background="@android:color/background_dark"
-            android:focusable="false" />
+            android:textColor="@android:color/background_light"
+            android:textSize="30sp"/>
 
-        <ImageButton
-            android:layout_width="wrap_content"
+        <TextView
+            android:text="Opis"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_storage_white_48dp_off"
-            android:id="@+id/on_my_shelf_button"
-            android:background="@android:color/background_dark"
-            android:focusable="false" />
+            android:id="@+id/tvDesc"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
+            android:layout_below="@+id/imgCover"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_favorite_white_48dp_off"
-            android:id="@+id/favorite_button"
-            android:background="@android:color/background_dark"
-            android:focusable="false" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tvDesc"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
 
     </LinearLayout>
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="200dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/imgCover"
-        android:background="@android:drawable/alert_dark_frame"
-        android:layout_below="@+id/tvID"
-        />
-
-    <TextView
-        android:text="#"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/hasz"
-        android:textColor="@android:color/background_light" />
-
-    <TextView
-        android:text="ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/hasz"
-        android:layout_toEndOf="@+id/hasz"
-        android:id="@+id/tvID"
-        android:textColor="@android:color/background_light" />
-
-
-</RelativeLayout>
+</ScrollView>

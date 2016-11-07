@@ -23,7 +23,7 @@ public class BooksFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.show_books_listview, container, false);
+        v = inflater.inflate(R.layout.books_fragment, container, false);
 
         Database db = new Database(getActivity());
 

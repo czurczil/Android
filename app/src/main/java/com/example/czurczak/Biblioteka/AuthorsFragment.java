@@ -20,7 +20,7 @@ public class AuthorsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.show_authors_listview, container, false);
+        v = inflater.inflate(R.layout.authors_fragment, container, false);
 
         Database db = new Database(getActivity());
 

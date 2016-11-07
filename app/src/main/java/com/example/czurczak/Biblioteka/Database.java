@@ -26,7 +26,7 @@ public class Database extends SQLiteOpenHelper {
     public Context context;
 
     public Database(Context context){
-        super(context, "Biblioteka2.db", null, 8);
+        super(context, "Biblioteka2.db", null, 9);
         this.context = context;
     }
 
@@ -70,8 +70,8 @@ public class Database extends SQLiteOpenHelper {
     public static final String TBG_BOOK_ID = "id_Ksiazki";
     public static final String TBG_GENRE_ID = "id_Gatunku";
 
-    public static final int CoverHeight = 300;
-    public static final int CoverWidth = 200;
+    public static final int CoverHeight = 400;
+    public static final int CoverWidth = 300;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -562,7 +562,7 @@ public class Database extends SQLiteOpenHelper {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(cr, imageUri);
             Bitmap scaled;
             ByteArrayOutputStream img = new ByteArrayOutputStream();
-            if(options.outWidth > CoverWidth && options.outHeight > CoverHeight) {
+            if(options.outWidth > CoverWidth + 100 && options.outHeight > CoverHeight + 100) {
                 scaled = Bitmap.createScaledBitmap(bitmap, CoverWidth, CoverHeight, true);
                 scaled.compress(Bitmap.CompressFormat.JPEG, 100, img);
             }

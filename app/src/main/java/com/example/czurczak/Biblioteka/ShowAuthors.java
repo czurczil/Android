@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,7 +22,10 @@ public class ShowAuthors extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_authors_listview);
         ListView myList = (ListView)findViewById(R.id.authors_listview);
-        //getSupportActionBar().setHomeButtonEnabled(true);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         myList.setAdapter(ListViewLayout(db.ShowAllAuthors()));
         db.close();
