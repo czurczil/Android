@@ -10,13 +10,16 @@
     </style>
 
     <style name="NavigationDrawerStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="android:textSize">24sp</item>
-        <item name="android:listPreferredItemHeightSmall">40dp</item>
-        <item name="android:typeface">sans</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="spinBars">true</item>
-        <item name="color">@android:color/white</item>
-    </style>
+       <item name="android:textSize">18sp</item>
+        <!--<item name="android:listPreferredItemHeightSmall">40dp</item>-->
+       <item name="android:typeface">sans</item>
+       <item name="android:textStyle">normal</item>
+       <item name="android:paddingTop">10dp</item>
+       <item name="spinBars">true</item>
+       <item name="color">@android:color/white</item>
+        <item name="android:listDivider">@color/colorPrimary</item>
+        <item name="android:divider">@android:color/background_light</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+   </style>
 
 </resources>

@@ -27,9 +27,18 @@ public class ShowAuthors extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        myList.setAdapter(ListViewLayout(db.ShowAllAuthors()));
-        db.close();
+        Bundle b = getIntent().getExtras();
+        if(b != null){
+            String autor = b.getString("Author");
 
+            myList.setAdapter(ListViewLayout(db.ShowSelectedAuthor(autor)));
+
+            db.close();
+        }
+        else {
+            myList.setAdapter(ListViewLayout(db.ShowAllAuthors()));
+            db.close();
+        }
     }
     public void onClickAuthors(View view){
         Intent intent = new Intent (getApplicationContext(), ShowAuthorsDetails.class);

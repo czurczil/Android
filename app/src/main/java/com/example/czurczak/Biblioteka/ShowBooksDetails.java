@@ -165,4 +165,29 @@ public class ShowBooksDetails extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void onClickCycle(View view){
+        Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
+        String cycle = ((TextView)(view.findViewById(R.id.tvCycle))).getText().toString();
+        String tb = db.TB_CYKLE;
+        intent.putExtra("Phrase", cycle);
+        intent.putExtra("Spinner", tb);
+        startActivity(intent);
+    }
+
+    public void onClickGenre(View view){
+        Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
+        String genre = ((TextView)(view.findViewById(R.id.tvGenre))).getText().toString();
+        String tb = db.TG_GENRE;
+        intent.putExtra("Phrase", genre);
+        intent.putExtra("Spinner", tb);
+        startActivity(intent);
+    }
+
+    public void onClickAuthor(View view) {
+        Intent intent = new Intent(getApplicationContext(), ShowAuthors.class);
+        String autor = ((TextView) (view.findViewById(R.id.tvAuthor))).getText().toString();
+        intent.putExtra("Author", autor);
+        startActivity(intent);
+    }
 }

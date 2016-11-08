@@ -26,7 +26,7 @@ public class Database extends SQLiteOpenHelper {
     public Context context;
 
     public Database(Context context){
-        super(context, "Biblioteka2.db", null, 9);
+        super(context, "Biblioteka2.db", null, 10);
         this.context = context;
     }
 
@@ -71,7 +71,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String TBG_GENRE_ID = "id_Gatunku";
 
     public static final int CoverHeight = 400;
-    public static final int CoverWidth = 300;
+    public static final int CoverWidth = 250;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -142,10 +142,30 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor;
-        String slctQuery = "SELECT " + TA_ID + ", (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") AS Autor, " +
-                TA_BIRTH_DATE + ", " + TA_SEX + ", " + TA_BIRTH_PLACE + ", " + TA_BIO + ", " + TA_PHOTO +
-                " FROM " + TABLE_AUTHOR + " WHERE " + "(" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") LIKE ?;";
-        cursor = db.rawQuery(slctQuery, new String[] {author});
+
+        if(author.contains(",")){
+
+            String slctQuery = "SELECT " + TA_ID + ", (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") AS Autor, " +
+                    TA_BIRTH_DATE + ", " + TA_SEX + ", " + TA_BIRTH_PLACE + ", " + TA_BIO + ", " + TA_PHOTO +
+                    " FROM " + TABLE_AUTHOR + " WHERE " + "(" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") LIKE ?";
+
+            int count = author.length() - author.replaceAll(",","").length();
+            String parts[] = author.split(",");
+            String authors[] = new String[count + 1];
+
+            for(int i = 0; i <= count; i++){
+                authors[i] =  parts[i];
+                slctQuery = slctQuery + " OR (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") LIKE ?";
+            }
+
+            cursor = db.rawQuery(slctQuery, authors);
+        }
+        else {
+            String slctQuery = "SELECT " + TA_ID + ", (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") AS Autor, " +
+                    TA_BIRTH_DATE + ", " + TA_SEX + ", " + TA_BIRTH_PLACE + ", " + TA_BIO + ", " + TA_PHOTO +
+                    " FROM " + TABLE_AUTHOR + " WHERE " + "(" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") LIKE ?;";
+            cursor = db.rawQuery(slctQuery, new String[] {author});
+        }
 
         if(cursor != null)
             cursor.move(0);
@@ -207,7 +227,33 @@ public class Database extends SQLiteOpenHelper {
                             " GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
                     cursor = db.rawQuery(slctQuery, new String[]{"%" + text + "%", "%" + text + "%"});
                 }
-            } else {
+            }
+            else if (spinner.equals("Gatunek")){
+                if(text.contains(",")){
+
+                    slctQuery = slctQuery + " WHERE " + TABLE_GENRE + "." + TG_GENRE + " LIKE ? ";
+
+                    int count = text.length() - text.replaceAll(",","").length();
+                    String parts[] = text.split(",");
+                    String genres[] = new String[count + 1];
+
+                    for(int i = 0; i <= count; i++){
+                        genres[i] = "%" + parts[i] + "%";
+                        slctQuery = slctQuery + " OR "+ TABLE_GENRE + "." + TG_GENRE + " LIKE ? ";
+                    }
+
+                    slctQuery = slctQuery + "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
+
+                    cursor = db.rawQuery(slctQuery, genres);
+                }
+                else {
+                    slctQuery = slctQuery + " WHERE " + TABLE_GENRE + "." + TG_GENRE + " LIKE ? " +
+                            "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
+
+                    cursor = db.rawQuery(slctQuery, new String[] {"%" + text + "%"});
+                }
+            }
+            else {
                 if (spinner.equals("Tytuł")) slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_TITLE +" LIKE ? " +
                         "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
                 else if (spinner.equals("Rok wydania"))
@@ -215,8 +261,6 @@ public class Database extends SQLiteOpenHelper {
                             "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
                 else if (spinner.equals("Cykl")) slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_CYKLE + " LIKE ? " +
                         "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
-                else slctQuery = slctQuery + " WHERE " + TABLE_GENRE + "." + TG_GENRE + " LIKE ? " +
-                            "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
 
                 cursor = db.rawQuery(slctQuery, new String[]{"%" + text + "%"});
             }
