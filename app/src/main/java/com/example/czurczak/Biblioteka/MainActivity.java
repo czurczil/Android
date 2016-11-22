@@ -117,4 +117,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("Author", autor);
         startActivity(intent);
     }
+
+    public void onClickGenre(View view){
+        Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
+        String genre = ((TextView)(view.findViewById(R.id.genre_name))).getText().toString();
+        String tb = db.TG_GENRE;
+        intent.putExtra("Phrase", genre);
+        intent.putExtra("Spinner", tb);
+        startActivity(intent);
+    }
+
+    public void onClickSeries(View view){
+        Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
+        String series = ((TextView)(view.findViewById(R.id.series_name))).getText().toString();
+        String tb = db.TB_CYKLE;
+        intent.putExtra("Phrase", series);
+        intent.putExtra("Spinner", tb);
+        startActivity(intent);
+    }
 }

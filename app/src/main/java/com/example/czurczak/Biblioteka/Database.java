@@ -126,6 +126,33 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public Cursor ShowAllSeries(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor;
+        String slctQuery = "SELECT " + TB_ID + ", " + TB_CYKLE +
+                " FROM " + TABLE_BOOKS + " WHERE " + TB_CYKLE + " <> '' " +
+                "GROUP BY " + TB_CYKLE;
+        cursor = db.rawQuery(slctQuery, null);
+
+        if(cursor != null)
+            cursor.move(0);
+        return cursor;
+    }
+
+    public Cursor ShowAllGenres(){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor;
+        String slctQuery = "SELECT " + TG_ID + ", " + TG_GENRE +
+                " FROM " + TABLE_GENRE;
+        cursor = db.rawQuery(slctQuery, null);
+
+        if(cursor != null)
+            cursor.move(0);
+        return cursor;
+    }
+
     public Cursor ShowAllAuthors(){
         SQLiteDatabase db = getReadableDatabase();
 

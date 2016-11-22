@@ -113,12 +113,15 @@ public class ShowBooksDetails extends AppCompatActivity {
             if(isFavorite == 1) {
                 db.UpdateFavorite(id, 0);
                 Toast.makeText(getApplicationContext(), "Usunięto z ulubionych" , Toast.LENGTH_SHORT).show();
+                fav_button.setImageResource(R.drawable.ic_favorite_white_48dp_off);
+                isFavorite = 0;
             }
             else {
                 db.UpdateFavorite(id, 1);
                 Toast.makeText(getApplicationContext(), "Dodano do ulubionych" , Toast.LENGTH_SHORT).show();
+                fav_button.setImageResource(R.drawable.ic_favorite_white_48dp_on);
+                isFavorite = 1;
             }
-        RestartActivity();
     }
 
     public void SetMyShelfButton(Cursor cursor){
@@ -127,12 +130,15 @@ public class ShowBooksDetails extends AppCompatActivity {
         if(isOnMyShelf == 1) {
             db.UpdateMyShelf(id, 0);
             Toast.makeText(getApplicationContext(), "Usunięto z mojej półki" , Toast.LENGTH_SHORT).show();
+            on_my_shelf_button.setImageResource(R.drawable.ic_storage_white_48dp_off);
+            isOnMyShelf = 0;
         }
         else {
             db.UpdateMyShelf(id, 1);
             Toast.makeText(getApplicationContext(), "Dodano do mojej półki" , Toast.LENGTH_SHORT).show();
+            on_my_shelf_button.setImageResource(R.drawable.ic_storage_white_48dp_on);
+            isOnMyShelf = 1;
         }
-        RestartActivity();
     }
 
     public void SetWishListButton(Cursor cursor){
@@ -141,18 +147,15 @@ public class ShowBooksDetails extends AppCompatActivity {
         if(isOnWishList == 1) {
             db.UpdateWishList(id, 0);
             Toast.makeText(getApplicationContext(), "Usunięto z mojej listy do przeczytania" , Toast.LENGTH_SHORT).show();
+            on_wish_list_button.setImageResource(R.drawable.ic_assignment_white_48dp_off);
+            isOnWishList = 0;
         }
         else {
             db.UpdateWishList(id, 1);
             Toast.makeText(getApplicationContext(), "Dodano do mojej listy do przeczytania" , Toast.LENGTH_SHORT).show();
+            on_wish_list_button.setImageResource(R.drawable.ic_assignment_white_48dp_on);
+            isOnWishList = 1;
         }
-        RestartActivity();
-    }
-
-    public void RestartActivity(){
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
     }
 
     @Override
@@ -167,12 +170,14 @@ public class ShowBooksDetails extends AppCompatActivity {
     }
 
     public void onClickCycle(View view){
-        Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
         String cycle = ((TextView)(view.findViewById(R.id.tvCycle))).getText().toString();
-        String tb = db.TB_CYKLE;
-        intent.putExtra("Phrase", cycle);
-        intent.putExtra("Spinner", tb);
-        startActivity(intent);
+        if(cycle.length() != 0) {
+            Intent intent = new Intent(getApplicationContext(), ShowBooks.class);
+            String tb = db.TB_CYKLE;
+            intent.putExtra("Phrase", cycle);
+            intent.putExtra("Spinner", tb);
+            startActivity(intent);
+        }
     }
 
     public void onClickGenre(View view){

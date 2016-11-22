@@ -12,9 +12,9 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 
 public class SimpleFragmentPageAdapter extends FragmentPagerAdapter {
-    private String[] titles = new String[] {"Książki", "Autorzy", "Ulubione", "Na mojej pólce", "Do przeczytania"};
+    private String[] titles = new String[] {"Książki", "Autorzy", "Gatunki", "Cykle", "Ulubione", "Na mojej pólce", "Do przeczytania"};
     private Context context;
-    private int pagecount = 5;
+    private int pagecount = titles.length;
     public SimpleFragmentPageAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
@@ -26,22 +26,21 @@ public class SimpleFragmentPageAdapter extends FragmentPagerAdapter {
         Fragment fragment;
         if (position == 0){
            fragment = new BooksFragment();
-        }
-
-        else if (position == 1){
+        } else if (position == 1){
             fragment = new AuthorsFragment();
-        }
-        else if (position == 2){
+        } else if (position == 2) {
+            fragment = new GenresFragment();
+        } else if(position == 3){
+            fragment = new SeriesFragment();
+        } else if (position == 4) {
             bundle.putString("Tabela", "Ulubione");
             fragment = new BooksFragment();
             fragment.setArguments(bundle);
-        }
-        else if(position == 3){
+        } else if (position == 5) {
             bundle.putString("Tabela", "Na_polce");
             fragment = new BooksFragment();
             fragment.setArguments(bundle);
-        }
-        else {
+        } else {
             bundle.putString("Tabela", "Do_przeczytania");
             fragment = new BooksFragment();
             fragment.setArguments(bundle);
