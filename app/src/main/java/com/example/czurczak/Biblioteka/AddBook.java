@@ -1,13 +1,11 @@
 package com.example.czurczak.Biblioteka;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 public class AddBook extends AppCompatActivity {
 
     private final static int PICK_IMAGE = 100;
-    private final Database db = new Database(this);
     private static ImageView imageView;
     private static byte[] cover;
     private Drawable drawable;
@@ -33,11 +30,6 @@ public class AddBook extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        //Refresh the gallery
-/*        sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse
-                ("file://"
-                        + Environment.getExternalStorageDirectory())));*/
 
         final EditText title = (EditText) findViewById(R.id.title);
         final EditText year = (EditText) findViewById(R.id.year);
@@ -54,6 +46,9 @@ public class AddBook extends AppCompatActivity {
                 ChooseImage();
             }
         });
+
+        final DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
 
         Button next = (Button)findViewById(R.id.next_add_form);
         next.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +90,8 @@ public class AddBook extends AppCompatActivity {
     protected void onActivityResult(int requested, int result, Intent data){
         super.onActivityResult(requested, result, data);
             if(result == RESULT_OK && requested == PICK_IMAGE){
+                DatabaseAccess db = DatabaseAccess.getInstance(this);
+                db.open();
                 Uri imageUri = data.getData();
                 imageView.setImageURI(imageUri);
                 cover = db.SaveImageFromGallery(this.getContentResolver(), imageUri);

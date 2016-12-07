@@ -17,7 +17,6 @@ import android.widget.TextView;
  */
 
 public class ShowAuthors extends AppCompatActivity {
-    final Database db = new Database(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +27,8 @@ public class ShowAuthors extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         Bundle b = getIntent().getExtras();
         if(b != null){
             String autor = b.getString("Author");
@@ -49,6 +50,8 @@ public class ShowAuthors extends AppCompatActivity {
     }
 
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
+        final DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
 
         String[] fromColNames = new String[] {
                 db.TA_ID,

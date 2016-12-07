@@ -22,7 +22,6 @@ import org.w3c.dom.Text;
  */
 
 public class ShowBooksDetails extends AppCompatActivity {
-    final Database db = new Database(this);
     int isFavorite;
     int isOnMyShelf;
     int isOnWishList;
@@ -39,6 +38,9 @@ public class ShowBooksDetails extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         Bundle b = getIntent().getExtras();
+
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         final Cursor cursor = db.ShowSelectedBooks(b.getString("Title"));
 
 
@@ -108,6 +110,8 @@ public class ShowBooksDetails extends AppCompatActivity {
     }
 
     public void SetFavoriteButton(Cursor cursor){
+            DatabaseAccess db = DatabaseAccess.getInstance(this);
+            db.open();
             cursor.moveToFirst();
             int id = cursor.getInt(cursor.getColumnIndex(db.TB_ID));
             if(isFavorite == 1) {
@@ -125,6 +129,8 @@ public class ShowBooksDetails extends AppCompatActivity {
     }
 
     public void SetMyShelfButton(Cursor cursor){
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         cursor.moveToFirst();
         int id = cursor.getInt(cursor.getColumnIndex(db.TB_ID));
         if(isOnMyShelf == 1) {
@@ -142,6 +148,8 @@ public class ShowBooksDetails extends AppCompatActivity {
     }
 
     public void SetWishListButton(Cursor cursor){
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         cursor.moveToFirst();
         int id = cursor.getInt(cursor.getColumnIndex(db.TB_ID));
         if(isOnWishList == 1) {
@@ -170,6 +178,8 @@ public class ShowBooksDetails extends AppCompatActivity {
     }
 
     public void onClickCycle(View view){
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         String cycle = ((TextView)(view.findViewById(R.id.tvCycle))).getText().toString();
         if(cycle.length() != 0) {
             Intent intent = new Intent(getApplicationContext(), ShowBooks.class);
@@ -181,6 +191,8 @@ public class ShowBooksDetails extends AppCompatActivity {
     }
 
     public void onClickGenre(View view){
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
         String genre = ((TextView)(view.findViewById(R.id.tvGenre))).getText().toString();
         String tb = db.TG_GENRE;

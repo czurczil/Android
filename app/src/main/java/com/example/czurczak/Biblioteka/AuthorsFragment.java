@@ -22,7 +22,8 @@ public class AuthorsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.authors_fragment, container, false);
 
-        Database db = new Database(getActivity());
+        final DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        db.open();
 
         Cursor cursor = db.ShowAllAuthors();
 
@@ -37,7 +38,8 @@ public class AuthorsFragment extends Fragment {
 
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
 
-        final Database db = new Database(getActivity());
+        final DatabaseAccess db = new DatabaseAccess(getActivity());
+        db.open();
 
         String[] fromColNames = new String[] {
                 db.TA_ID,

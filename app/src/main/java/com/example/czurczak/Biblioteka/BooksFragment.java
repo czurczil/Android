@@ -25,7 +25,9 @@ public class BooksFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.books_fragment, container, false);
 
-        Database db = new Database(getActivity());
+        DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        db.open();
+
 
         Bundle bundle = this.getArguments();
         if(bundle != null){
@@ -49,7 +51,8 @@ public class BooksFragment extends android.support.v4.app.Fragment {
 
     public void ListViewLayout(Cursor cursor){
 
-        final Database db = new Database(getActivity());
+        final DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        db.open();
         //mapping from cursor to view fields
         String[] fromColNames = new String[] {
                 db.TB_ID,

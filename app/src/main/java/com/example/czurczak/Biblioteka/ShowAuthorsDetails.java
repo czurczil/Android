@@ -17,7 +17,6 @@ import android.widget.TextView;
  */
 
 public class ShowAuthorsDetails extends AppCompatActivity {
-    final Database db = new Database(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +26,8 @@ public class ShowAuthorsDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        final DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         Bundle b = getIntent().getExtras();
         Cursor cursor = db.ShowSelectedAuthor(b.getString("Author"));
 

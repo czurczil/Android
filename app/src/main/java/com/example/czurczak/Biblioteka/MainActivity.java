@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
     private Intent menu_intent;
     private DrawerLayout drawer;
-    private Database db = new Database(this);
     private Toolbar toolbar;
     private TabLayout tabLayout;
 
@@ -59,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         switch(item.getItemId()) {
             case R.id.all_books:
                 menu_intent = new Intent(getApplicationContext(), ShowBooks.class);
@@ -119,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onClickGenre(View view){
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
         String genre = ((TextView)(view.findViewById(R.id.genre_name))).getText().toString();
         String tb = db.TG_GENRE;
@@ -128,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onClickSeries(View view){
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
         String series = ((TextView)(view.findViewById(R.id.series_name))).getText().toString();
         String tb = db.TB_CYKLE;

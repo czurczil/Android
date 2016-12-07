@@ -23,7 +23,8 @@ public class GenresFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.genres_fragment, container, false);
 
-        Database db = new Database(getActivity());
+        final DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        db.open();
 
         Cursor cursor = db.ShowAllGenres();
 
@@ -36,7 +37,8 @@ public class GenresFragment extends Fragment {
 
     public void ListViewLayout(Cursor cursor){
 
-        final Database db = new Database(getActivity());
+        final DatabaseAccess db = new DatabaseAccess(getActivity());
+        db.open();
 
         //mapping from cursor to view fields
         String[] fromColNames = new String[] {

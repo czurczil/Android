@@ -23,7 +23,8 @@ import android.widget.Toast;
 public class AddAuthor extends AppCompatActivity {
 
     private final static int PICK_IMAGE = 100;
-    private final Database db = new Database(this);
+
+    //private final DatabaseAccess db = new DatabaseAccess(this);
     private static ImageView imageView;
     private static byte[] photo;
     private Drawable drawable;
@@ -65,6 +66,12 @@ public class AddAuthor extends AppCompatActivity {
             }
         });
 
+        final DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
+
+        final DatabaseAccess dbw = DatabaseAccess.getInstance(this);
+        dbw.write();
+
         Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +93,7 @@ public class AddAuthor extends AppCompatActivity {
                     if(db.IsAlreadyInDatabase(title, 0) == false
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
                             && db.IsAlreadyInDatabase(genre, 3) == false) {
-                        db.AddBook(title,
+                        dbw.AddBook(title,
                             (first_name.getText()).toString(),
                             (last_name.getText()).toString(),
                             Integer.parseInt(year),
@@ -107,7 +114,7 @@ public class AddAuthor extends AppCompatActivity {
                     else if(db.IsAlreadyInDatabase(title, 0) == true
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
                             && db.IsAlreadyInDatabase(genre, 3) == false){
-                        db.AddBook((first_name.getText()).toString(),
+                        dbw.AddBook((first_name.getText()).toString(),
                                 (last_name.getText()).toString(),
                                 genre,
                                 birth_date.getText().toString(),
@@ -125,7 +132,7 @@ public class AddAuthor extends AppCompatActivity {
                     else if(db.IsAlreadyInDatabase(title, 0) == false
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
                             && db.IsAlreadyInDatabase(genre, 3) == false){
-                        db.AddBook(title,
+                        dbw.AddBook(title,
                                 Integer.parseInt(year),
                                 description,
                                 cycle,
@@ -141,7 +148,7 @@ public class AddAuthor extends AppCompatActivity {
                     else if(db.IsAlreadyInDatabase(title, 0) == false
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
                             && db.IsAlreadyInDatabase(genre, 2) == true){
-                        db.AddBook(title,
+                        dbw.AddBook(title,
                                 (first_name.getText()).toString(),
                                 (last_name.getText()).toString(),
                                 Integer.parseInt(year),
@@ -163,7 +170,7 @@ public class AddAuthor extends AppCompatActivity {
                     else if(db.IsAlreadyInDatabase(title, 0) == true
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
                             && db.IsAlreadyInDatabase(genre, 3) == false) {
-                        db.Bound(genre,db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(),1));
+                        dbw.Bound(genre,db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(),1));
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
@@ -172,7 +179,7 @@ public class AddAuthor extends AppCompatActivity {
                     else if(db.IsAlreadyInDatabase(title, 0) == true
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == false
                             && db.IsAlreadyInDatabase(genre, 3) == true) {
-                        db.AddBook((first_name.getText()).toString(),
+                        dbw.AddBook((first_name.getText()).toString(),
                                 (last_name.getText()).toString(),
                                 birth_date.getText().toString(),
                                 birth_place.getText().toString(),
@@ -190,7 +197,7 @@ public class AddAuthor extends AppCompatActivity {
                     else if(db.IsAlreadyInDatabase(title, 0) == false
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
                             && db.IsAlreadyInDatabase(genre, 3) == true) {
-                        db.AddBook(title,
+                        dbw.AddBook(title,
                                 Integer.parseInt(year),
                                 description,
                                 cycle,
@@ -206,7 +213,7 @@ public class AddAuthor extends AppCompatActivity {
                     else  if(db.IsAlreadyInDatabase(title, 0) == true
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
                             && db.IsAlreadyInDatabase(genre, 3) == true && db.IsBoundedToThatBook(db.GetID(title, 0), db.GetID(genre, 2), 0) == false) {
-                        db.Bound(db.GetID(genre, 2), db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1));
+                        dbw.Bound(db.GetID(genre, 2), db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1));
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
@@ -216,7 +223,7 @@ public class AddAuthor extends AppCompatActivity {
                             && db.IsAlreadyInDatabase((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1) == true
                             && db.IsBoundedToThatBook(db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1), 1) == false
                             && db.IsAlreadyInDatabase(genre, 3) == true) {
-                        db.Bound(db.GetID(genre, 2), db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1));
+                        dbw.Bound(db.GetID(genre, 2), db.GetID(title, 0), db.GetID((first_name.getText()).toString() + " " + (last_name.getText()).toString(), 1));
                         Toast.makeText(getApplicationContext(), "Zapisano do bazy danych", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
@@ -227,6 +234,7 @@ public class AddAuthor extends AppCompatActivity {
                         startActivity(intent);
                     }
                     db.close();
+                    dbw.close();
                 }
                 else Toast.makeText(getApplicationContext(), "Pola z gwiazdkami są wymagane", Toast.LENGTH_SHORT).show();
             }
@@ -249,6 +257,8 @@ public class AddAuthor extends AppCompatActivity {
     protected void onActivityResult(int requested, int result, Intent data){
         super.onActivityResult(requested, result, data);
         if(result == RESULT_OK && requested == PICK_IMAGE){
+            DatabaseAccess db = DatabaseAccess.getInstance(this);
+            db.open();
             Uri imageUri = data.getData();
             imageView.setImageURI(imageUri);
             photo = db.SaveImageFromGallery(this.getContentResolver(), imageUri);

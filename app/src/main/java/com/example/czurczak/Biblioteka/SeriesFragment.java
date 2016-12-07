@@ -21,7 +21,8 @@ public class SeriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.series_fragment, container, false);
 
-        Database db = new Database(getActivity());
+        DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        db.open();
 
         Cursor cursor = db.ShowAllSeries();
 
@@ -34,7 +35,8 @@ public class SeriesFragment extends Fragment {
 
     public void ListViewLayout(Cursor cursor){
 
-        final Database db = new Database(getActivity());
+        DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        db.open();
 
         //mapping from cursor to view fields
 

@@ -28,7 +28,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/hasz"
-            android:textColor="@android:color/background_light" />
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:text="ID"
@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@android:color/background_light"
+                    android:textColor="@color/colorPrimary"
                     android:textAlignment="textStart"
                     android:translationX="40dp" />
 
@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@android:color/background_light"
+                    android:textColor="@color/colorPrimary"
                     android:textAlignment="textEnd"
                     android:translationX="-40dp" />
 
@@ -118,27 +118,27 @@
 
                 <TextView
                     android:text="Cykl"
-                    android:layout_width="80dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="onClickCycle"
                     android:id="@+id/tvCycle"
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:textColor="@android:color/background_light"
-                    android:textAlignment="textStart"
-                    android:translationX="40dp"/>
+                    android:textAlignment="center"
+                    android:translationX="0dp"/>
 
                 <TextView
                     android:text="Gatunek"
-                    android:layout_width="80dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvGenre"
                     android:onClick="onClickGenre"
                     android:layout_weight="1"
                     android:textSize="20sp"
                     android:textColor="@android:color/background_light"
-                    android:textAlignment="textEnd"
-                    android:translationX="-40dp" />
+                    android:textAlignment="center"
+                    android:translationX="0dp" />
 
             </LinearLayout>
 
@@ -183,7 +183,7 @@
             android:text="Opis:"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/background_light"
+            android:textColor="@color/colorPrimary"
             android:textSize="30sp"/>
 
         <TextView

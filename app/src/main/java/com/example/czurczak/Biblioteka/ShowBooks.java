@@ -19,8 +19,6 @@ import android.widget.TextView;
  * Created by czurczak on 14.09.2016.
  */
 public class ShowBooks extends AppCompatActivity {
-    final Database db = new Database(this);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +40,8 @@ public class ShowBooks extends AppCompatActivity {
         }
 
 
+        DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
         if(spinner != null && phrase != null && table == null){
 
             Cursor cursor = db.ShowSelectedBooks(spinner, phrase);
@@ -73,6 +73,9 @@ public class ShowBooks extends AppCompatActivity {
     }
 
     public void ListViewLayout(Cursor cursor){
+
+        final DatabaseAccess db = DatabaseAccess.getInstance(this);
+        db.open();
 
         //mapping from cursor to view fields
         String[] fromColNames = new String[] {
