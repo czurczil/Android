@@ -67,7 +67,7 @@ public class AddAuthor extends AppCompatActivity {
         });
 
         final DatabaseAccess db = DatabaseAccess.getInstance(this);
-        db.open();
+        //db.open();
 
         final DatabaseAccess dbw = DatabaseAccess.getInstance(this);
         dbw.write();
@@ -233,13 +233,13 @@ public class AddAuthor extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     }
-                    db.close();
-                    dbw.close();
                 }
                 else Toast.makeText(getApplicationContext(), "Pola z gwiazdkami są wymagane", Toast.LENGTH_SHORT).show();
+
+                db.close();
+                dbw.close();
             }
         });
-
 
     }
     @Override
@@ -258,7 +258,6 @@ public class AddAuthor extends AppCompatActivity {
         super.onActivityResult(requested, result, data);
         if(result == RESULT_OK && requested == PICK_IMAGE){
             DatabaseAccess db = DatabaseAccess.getInstance(this);
-            db.open();
             Uri imageUri = data.getData();
             imageView.setImageURI(imageUri);
             photo = db.SaveImageFromGallery(this.getContentResolver(), imageUri);

@@ -91,7 +91,6 @@ public class AddBook extends AppCompatActivity {
         super.onActivityResult(requested, result, data);
             if(result == RESULT_OK && requested == PICK_IMAGE){
                 DatabaseAccess db = DatabaseAccess.getInstance(this);
-                db.open();
                 Uri imageUri = data.getData();
                 imageView.setImageURI(imageUri);
                 cover = db.SaveImageFromGallery(this.getContentResolver(), imageUri);

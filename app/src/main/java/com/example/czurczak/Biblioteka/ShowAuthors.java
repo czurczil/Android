@@ -2,11 +2,16 @@ package com.example.czurczak.Biblioteka;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -17,11 +22,16 @@ import android.widget.TextView;
  */
 
 public class ShowAuthors extends AppCompatActivity {
+    String sort;
+    String autor;
+    Cursor cursor;
+    private AlphaAnimation buttonClick = new AlphaAnimation(1.0F, 0.5F);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_authors_listview);
-        ListView myList = (ListView)findViewById(R.id.authors_listview);
+
+        buttonClick.setDuration(80);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
@@ -31,35 +41,25 @@ public class ShowAuthors extends AppCompatActivity {
         db.open();
         Bundle b = getIntent().getExtras();
         if(b != null){
-            String autor = b.getString("Author");
+            autor = b.getString("Author");
 
-            myList.setAdapter(ListViewLayout(db.ShowSelectedAuthor(autor)));
-
-            db.close();
+            cursor = db.ShowSelectedAuthor(autor);
         }
         else {
-            myList.setAdapter(ListViewLayout(db.ShowAllAuthors()));
-            db.close();
+            cursor = db.ShowAllAuthors(null);
         }
-    }
-    public void onClickAuthors(View view){
-        Intent intent = new Intent (getApplicationContext(), ShowAuthorsDetails.class);
-        String autor = ((TextView)(view.findViewById(R.id.authors_name))).getText().toString();
-        intent.putExtra("Author", autor);
-        startActivity(intent);
+        ListViewLayout(cursor);
+        db.close();
     }
 
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
         final DatabaseAccess db = DatabaseAccess.getInstance(this);
-        db.open();
 
         String[] fromColNames = new String[] {
-                db.TA_ID,
                 db.KEY_AUTHOR,
                 db.TA_PHOTO
         };
         int[] toViewIDs = new int[] {
-                R.id.authors_id,
                 R.id.authors_name,
                 R.id.imageView2
         };
@@ -90,14 +90,72 @@ public class ShowAuthors extends AppCompatActivity {
             });
         }
 
+        ListView myList = (ListView)findViewById(R.id.authors_listview);
+        myList.setAdapter(myCursorAdapter);
+
         return myCursorAdapter;
+    }
+
+    public void onClickAuthors(View view){
+        view.startAnimation(buttonClick);
+        Intent intent = new Intent (getApplicationContext(), ShowAuthorsDetails.class);
+        String autor = ((TextView)(view.findViewById(R.id.authors_name))).getText().toString();
+        intent.putExtra("Author", autor);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sort_authors, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        DatabaseAccess db = DatabaseAccess.getInstance(getApplicationContext());
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.author_id:
+                db.open();
+                sort = " ORDER BY " + db.TABLE_AUTHOR + "." + db.TB_ID;
+                if(autor != null) cursor = db.ShowSelectedAuthor(autor);
+                else cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.first_name_asc:
+                db.open();
+                sort = " ORDER BY " + db.TABLE_AUTHOR + "." + db.TA_FIRST_NAME + " ASC";
+                if(autor != null) cursor = db.ShowSelectedAuthor(autor);
+                else cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.first_name_desc:
+                db.open();
+                sort = " ORDER BY "+ db.TABLE_AUTHOR + "." + db.TA_FIRST_NAME + " DESC";
+                if(autor != null) cursor = db.ShowSelectedAuthor(autor);
+                else cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.last_name_asc:
+                db.open();
+                sort = " ORDER BY " + db.TABLE_AUTHOR + "." + db.TA_LAST_NAME + " ASC";
+                cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.last_name_desc:
+                db.open();
+                sort = " ORDER BY "+ db.TABLE_AUTHOR + "." + db.TA_LAST_NAME + " DESC";
+                if(autor != null) cursor = db.ShowSelectedAuthor(autor);
+                else cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

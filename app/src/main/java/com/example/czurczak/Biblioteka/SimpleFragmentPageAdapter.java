@@ -12,7 +12,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 
 public class SimpleFragmentPageAdapter extends FragmentPagerAdapter {
-    private String[] titles = new String[] {"Książki", "Autorzy", "Gatunki", "Cykle", "Ulubione", "Na mojej pólce", "Do przeczytania"};
+    private String[] titles = new String[] {"Książki", "Autorzy", "Gatunki", "Cykle", "Ulubione", "Przeczytane", "Do przeczytania"};
     private Context context;
     private int pagecount = titles.length;
     public SimpleFragmentPageAdapter(FragmentManager fm, Context context) {

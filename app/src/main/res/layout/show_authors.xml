@@ -5,62 +5,33 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_dark">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:onClick="onClickAuthors"
-        android:clickable="true"
-        android:background="@android:drawable/alert_dark_frame">
-
-<LinearLayout android:orientation="horizontal"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#"
-                android:id="@+id/hasz2"
-                android:textColor="@android:color/background_light"
-                android:textSize="24sp"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/authors_id"
-                android:layout_weight="1"
-                android:textSize="24sp"
-                android:textColor="@android:color/background_light"
-                android:layout_gravity="left"
-                />
-</LinearLayout>
-
-            <LinearLayout
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:onClick="onClickAuthors"
+                android:clickable="true"
+                android:background="@drawable/grey_bar"
+            android:layout_height="180dp">
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 app:srcCompat="@mipmap/ic_launcher"
                 android:id="@+id/imageView2"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/authors_name"
                 android:textColor="@android:color/background_light"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:text="Imię i nazwisko"
-                android:textSize="30sp"
-                android:layout_gravity="center" />
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="12dp"
+                android:textStyle="normal|bold"
+                android:layout_marginStart="5dp" />
 
             </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

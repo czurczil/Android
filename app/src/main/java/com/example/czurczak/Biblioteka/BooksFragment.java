@@ -1,17 +1,17 @@
 package com.example.czurczak.Biblioteka;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 /**
  * Created by czurczak on 06.11.2016.
@@ -20,6 +20,8 @@ import android.widget.TextView;
 public class BooksFragment extends android.support.v4.app.Fragment {
     View v;
     Cursor cursor;
+    String sort;
+    String value;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,19 +30,11 @@ public class BooksFragment extends android.support.v4.app.Fragment {
         DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
         db.open();
 
-
         Bundle bundle = this.getArguments();
-        if(bundle != null){
-            String value = bundle.getString("Tabela");
-            if(value.equals("Ulubione")){
-                cursor = db.ShowSelectedBooks(value);
-            }
-            else if(value.equals("Na_polce")){
-                cursor = db.ShowSelectedBooks(value);
-            }
-            else cursor = db.ShowSelectedBooks(value);
-        }
-        else cursor = db.ShowAllBooks();
+        if (bundle != null) {
+            value = bundle.getString("Tabela");
+            if(value != null) cursor = db.ShowSelectedBooks(value, null);
+        } else cursor = db.ShowAllBooks(null);
 
         ListViewLayout(cursor);
 
@@ -49,32 +43,30 @@ public class BooksFragment extends android.support.v4.app.Fragment {
         return v;
     }
 
-    public void ListViewLayout(Cursor cursor){
+    public SimpleCursorAdapter ListViewLayout(Cursor cursor) {
 
         final DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
-        db.open();
+
         //mapping from cursor to view fields
-        String[] fromColNames = new String[] {
-                db.TB_ID,
+        String[] fromColNames = new String[]{
                 db.TB_TITLE,
                 db.KEY_AUTHOR,
                 db.TB_COVER
         };
-        int[] toViewIDs = new int[] {
-                R.id.tvID,
+        int[] toViewIDs = new int[]{
                 R.id.tvTitle,
                 R.id.tvAuthor,
                 R.id.imgCover
         };
 
-        SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
+        final SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
                 getActivity(),
                 R.layout.show_books,
                 cursor,
                 fromColNames,
                 toViewIDs
         );
-        if(cursor != null && cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
                 @Override
                 public boolean setViewValue(View view, Cursor cursor, int colIndex) {
@@ -93,7 +85,56 @@ public class BooksFragment extends android.support.v4.app.Fragment {
             });
         }
 
-        ListView myList = (ListView)v.findViewById(R.id.books_listview);
+        ListView myList = (ListView) v.findViewById(R.id.books_listview);
         myList.setAdapter(myCursorAdapter);
+
+        return myCursorAdapter;
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.sort_books, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        switch(item.getItemId())
+        {
+            case R.id.book_id:
+                db.open();
+                sort = " ORDER BY " + db.TABLE_BOOKS + "." + db.TB_ID;
+                if(value == null) cursor = db.ShowAllBooks(sort);
+                else cursor = db.ShowSelectedBooks(value, sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.title_asc:
+                db.open();
+                sort = " ORDER BY " + db.TABLE_BOOKS + "." + db.TB_TITLE + " ASC";
+                if(value == null) cursor = db.ShowAllBooks(sort);
+                else cursor = db.ShowSelectedBooks(value, sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.title_desc:
+                db.open();
+                sort = " ORDER BY "+ db.TABLE_BOOKS + "." + db.TB_TITLE + " DESC";
+                if(value == null) cursor = db.ShowAllBooks(sort);
+                else cursor = db.ShowSelectedBooks(value, sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

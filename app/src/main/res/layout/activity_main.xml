@@ -54,7 +54,8 @@
         app:itemTextColor="@android:color/background_light"
         app:theme="@style/NavigationDrawerStyle"
         app:itemIconTint="@android:color/background_light"
-        android:background="@android:color/background_dark">
+        android:background="@android:color/background_dark"
+        app:headerLayout="@layout/nav_header">
 </android.support.design.widget.NavigationView>
 
 

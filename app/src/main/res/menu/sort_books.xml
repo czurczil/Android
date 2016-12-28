@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Kolejność dodania"
+        android:id="@+id/book_id" />
+    <item android:title="Tytuł: Alfabetycznie"
+        android:id="@+id/title_asc"/>
+    <item android:title="Tytuł: Niealfabetycznie"
+        android:id="@+id/title_desc"/>
+</menu>

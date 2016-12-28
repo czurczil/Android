@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -14,12 +15,20 @@
         <!--<item name="android:listPreferredItemHeightSmall">40dp</item>-->
        <item name="android:typeface">sans</item>
        <item name="android:textStyle">normal</item>
-       <item name="android:paddingTop">10dp</item>
        <item name="spinBars">true</item>
        <item name="color">@android:color/white</item>
         <item name="android:listDivider">@color/colorPrimary</item>
         <item name="android:divider">@android:color/background_light</item>
         <item name="android:textColorSecondary">@color/colorPrimary</item>
    </style>
+
+    <style name="OverFlow" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_navigation_more_vert</item>
+    </style>
+
+    <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:textSize">0sp</item>
+    </style>
 
 </resources>

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,19 +20,19 @@ import android.widget.SimpleCursorAdapter;
 
 public class AuthorsFragment extends Fragment {
     View v;
+    String sort;
+    Cursor cursor;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.authors_fragment, container, false);
 
-        final DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
         db.open();
 
-        Cursor cursor = db.ShowAllAuthors();
+        cursor = db.ShowAllAuthors(null);
 
-        ListView myList = (ListView)v.findViewById(R.id.authors_listview);
-
-        myList.setAdapter(ListViewLayout(cursor));
+        ListViewLayout(cursor);
 
         db.close();
 
@@ -39,15 +42,14 @@ public class AuthorsFragment extends Fragment {
     public SimpleCursorAdapter ListViewLayout(Cursor cursor){
 
         final DatabaseAccess db = new DatabaseAccess(getActivity());
-        db.open();
 
         String[] fromColNames = new String[] {
-                db.TA_ID,
+                //db.TA_ID,
                 db.KEY_AUTHOR,
                 db.TA_PHOTO
         };
         int[] toViewIDs = new int[] {
-                R.id.authors_id,
+                //R.id.authors_id,
                 R.id.authors_name,
                 R.id.imageView2
         };
@@ -77,7 +79,67 @@ public class AuthorsFragment extends Fragment {
                 }
             });
         }
+        ListView myList = (ListView)v.findViewById(R.id.authors_listview);
+
+        myList.setAdapter(myCursorAdapter);
 
         return myCursorAdapter;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.sort_authors, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        DatabaseAccess db = DatabaseAccess.getInstance(getActivity());
+        switch(item.getItemId())
+        {
+            case R.id.author_id:
+                db.open();
+                sort = " ORDER BY " + db.TABLE_AUTHOR + "." + db.TB_ID;
+                cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.first_name_asc:
+                db.open();
+                sort = " ORDER BY " + db.TABLE_AUTHOR + "." + db.TA_FIRST_NAME + " ASC";
+                cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.first_name_desc:
+                db.open();
+                sort = " ORDER BY "+ db.TABLE_AUTHOR + "." + db.TA_FIRST_NAME + " DESC";
+                cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.last_name_asc:
+                db.open();
+                sort = " ORDER BY " + db.TABLE_AUTHOR + "." + db.TA_LAST_NAME + " ASC";
+                cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.last_name_desc:
+                db.open();
+                sort = " ORDER BY "+ db.TABLE_AUTHOR + "." + db.TA_LAST_NAME + " DESC";
+                cursor = db.ShowAllAuthors(sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

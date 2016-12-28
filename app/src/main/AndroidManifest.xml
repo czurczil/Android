@@ -34,7 +34,13 @@
                 android:value="com.example.czurczak.Biblioteka.MainActivity" />
         </activity>
         <activity android:name="com.example.czurczak.Biblioteka.ShowBooksDetails"
-            android:parentActivityName=".ShowBooks">
+        android:parentActivityName=".ShowBooks">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.czurczak.Biblioteka.MainActivity" />
+    </activity>
+        <activity android:name="com.example.czurczak.Biblioteka.FullScreenImage"
+            android:parentActivityName=".ShowBooksDetails">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.czurczak.Biblioteka.MainActivity" />

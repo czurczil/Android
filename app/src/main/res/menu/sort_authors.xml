@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Kolejność dodania"
+        android:id="@+id/author_id" />
+    <item android:title="Imię: Alfabetycznie"
+        android:id="@+id/first_name_asc"/>
+    <item android:title="Imię: Niealfabetycznie"
+        android:id="@+id/first_name_desc"/>
+    <item android:title="Nazwisko: Alfabetycznie"
+        android:id="@+id/last_name_asc"/>
+    <item android:title="Nazwisko: Niealfabetycznie"
+        android:id="@+id/last_name_desc"/>
+</menu>

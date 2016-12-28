@@ -26,7 +26,7 @@ public class DatabaseAccess {
     private SQLiteDatabase db;
     private static DatabaseAccess instance;
 
-    private static final String TABLE_BOOKS = "Ksiazki";
+    public static final String TABLE_BOOKS = "Ksiazki";
     public static final String TB_ID = "_id";
     public static final String TB_TITLE = "Tytuł";
     public static final String TB_YEAR = "Rok_wydania";
@@ -40,7 +40,7 @@ public class DatabaseAccess {
     public static final String KEY_GENRE = "Gatunek";
     public static final String KEY_AUTHOR = "Autor";
 
-    private static final String TABLE_AUTHOR = "Autor";
+    public static final String TABLE_AUTHOR = "Autor";
     public static final String TA_ID = "_id";
     public static final String TA_FIRST_NAME = "Imię";
     public static final String TA_LAST_NAME = "Nazwisko";
@@ -51,22 +51,22 @@ public class DatabaseAccess {
     public static final String TA_PHOTO = "Zdjęcie";
 
 
-    private static final String TABLE_AUTHOR_BOOKS = "Ksiazki_Autorów";
+    public static final String TABLE_AUTHOR_BOOKS = "Ksiazki_Autorów";
     public static final String TAB_ID = "_id";
     public static final String TAB_AUTHOR_ID = "id_Autora";
     public static final String TAB_BOOK_ID = "id_Ksiazki";
 
-    private static final String TABLE_GENRE = "Gatunek";
+    public static final String TABLE_GENRE = "Gatunek";
     public static final String TG_ID = "_id";
     public static final String TG_GENRE = "Gatunek";
 
-    private static final String TABLE_BOOKS_GENRE = "Gatunki_Ksiazek";
+    public static final String TABLE_BOOKS_GENRE = "Gatunki_Ksiazek";
     public static final String TBG_ID = "_id";
     public static final String TBG_BOOK_ID = "id_Ksiazki";
     public static final String TBG_GENRE_ID = "id_Gatunku";
 
-    public static final int CoverHeight = 400;
-    public static final int CoverWidth = 250;
+    public static final int CoverHeight = 500;
+    public static final int CoverWidth = 350;
 
     /**
      * Private constructor to aboid object creation from outside classes.
@@ -110,7 +110,7 @@ public class DatabaseAccess {
         }
     }
 
-    public Cursor ShowAllSeries(){
+    public Cursor ShowAllSeries(String sort){
         //SQLiteDatabase db = getReadableDatabase();
 
 
@@ -118,6 +118,8 @@ public class DatabaseAccess {
         String slctQuery = "SELECT " + TB_ID + ", " + TB_CYKLE +
                 " FROM " + TABLE_BOOKS + " WHERE " + TB_CYKLE + " <> '' " +
                 "GROUP BY " + TB_CYKLE;
+        if(sort != null)
+            slctQuery = slctQuery + sort;
         cursor = db.rawQuery(slctQuery, null);
 
         if(cursor != null)
@@ -125,12 +127,14 @@ public class DatabaseAccess {
         return cursor;
     }
 
-    public Cursor ShowAllGenres(){
+    public Cursor ShowAllGenres(String sort){
 
 
         Cursor cursor;
         String slctQuery = "SELECT " + TG_ID + ", " + TG_GENRE +
                 " FROM " + TABLE_GENRE;
+        if(sort != null)
+            slctQuery = slctQuery + sort;
         cursor = db.rawQuery(slctQuery, null);
 
         if(cursor != null)
@@ -138,7 +142,7 @@ public class DatabaseAccess {
         return cursor;
     }
 
-    public Cursor ShowAllAuthors(){
+    public Cursor ShowAllAuthors(String sort){
         //SQLiteDatabase db = getReadableDatabase();
 
 
@@ -146,6 +150,8 @@ public class DatabaseAccess {
         Cursor cursor;
         String slctQuery = "SELECT " + TA_ID + ", (" + TA_FIRST_NAME + "  || ' ' ||  " + TA_LAST_NAME + ") AS Autor, " + TA_PHOTO +
                 " FROM " + TABLE_AUTHOR;
+        if(sort != null)
+            slctQuery = slctQuery + sort;
         cursor = db.rawQuery(slctQuery, null);
 
         if(cursor != null)
@@ -189,13 +195,7 @@ public class DatabaseAccess {
     }
 
     //Displaying results for Books
-    public Cursor ShowAllBooks(){
-
- /*       String slctQuery = "SELECT k._id, (a.Imię || ' ' || a.Nazwisko) AS Autor, k.Tytuł, k.Rok_wydania, k.Opis, k.Cykl, k.Okładka, g.Gatunek from Ksiazki k " +
-                "LEFT JOIN Ksiazki_Autorów ka ON (k._id=ka.id_Ksiazki) " +
-                "LEFT JOIN Autor a ON (ka.id_Autora=a._id)" +
-                "LEFT JOIN Gatunki_Ksiazek gk ON (k._id=gk.id_Ksiazki) " +
-                "LEFT JOIN Gatunek g ON (gk.id_Gatunku=g._id)";*/
+    public Cursor ShowAllBooks(String sort){
         String slctQuery = "SELECT " + TABLE_BOOKS + "." + TB_ID + ", " +
                 "GROUP_CONCAT(DISTINCT " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " || ' ' || " + TABLE_AUTHOR + "." + TA_LAST_NAME +") AS Autor, " +
                 TABLE_BOOKS + "." + TB_TITLE + ", " + TABLE_BOOKS + "." + TB_YEAR + ", " + TABLE_BOOKS + "." + TB_DESC + ", " +
@@ -207,13 +207,16 @@ public class DatabaseAccess {
                 "LEFT JOIN " + TABLE_BOOKS_GENRE + " ON (" + TABLE_BOOKS + "." + TB_ID + "=" + TABLE_BOOKS_GENRE + "." + TBG_BOOK_ID + ") " +
                 "LEFT JOIN " + TABLE_GENRE + " ON (" + TABLE_BOOKS_GENRE + "." + TBG_GENRE_ID + "=" + TABLE_GENRE + "." + TG_ID + ") " +
                 "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
+        if(sort != null)
+            slctQuery = slctQuery + sort;
 
         Cursor cursor = db.rawQuery(slctQuery, null);
         if(cursor != null)
             cursor.move(0);
         return cursor;
     }
-    public Cursor ShowSelectedBooks(String spinner, String text){
+
+    public Cursor ShowSelectedBooks(String spinner, String text, String sort){
         // SQLiteDatabase db = getReadableDatabase();
 
 
@@ -238,10 +241,14 @@ public class DatabaseAccess {
                 slctQuery = slctQuery + " WHERE (" + TABLE_AUTHOR + "." + TA_FIRST_NAME + " LIKE ? AND " + TABLE_AUTHOR + "." + TA_LAST_NAME + " LIKE ?)" +
                         " OR (" + TABLE_AUTHOR + "." + TA_LAST_NAME + " LIKE ? AND " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " LIKE ?) " +
                         "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
+                if(sort != null)
+                    slctQuery = slctQuery + sort;
                 cursor = db.rawQuery(slctQuery, new String[]{imie, nazwisko, imie, nazwisko});
             } else {
                 slctQuery = slctQuery + " WHERE " + TABLE_AUTHOR + "." + TA_FIRST_NAME + " LIKE ? OR " + TABLE_AUTHOR + "." + TA_LAST_NAME + " LIKE ?" +
                         " GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
+                if(sort != null)
+                    slctQuery = slctQuery + sort;
                 cursor = db.rawQuery(slctQuery, new String[]{"%" + text + "%", "%" + text + "%"});
             }
         }
@@ -260,13 +267,15 @@ public class DatabaseAccess {
                 }
 
                 slctQuery = slctQuery + "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
-
+                if(sort != null)
+                    slctQuery = slctQuery + sort;
                 cursor = db.rawQuery(slctQuery, genres);
             }
             else {
                 slctQuery = slctQuery + " WHERE " + TABLE_GENRE + "." + TG_GENRE + " LIKE ? " +
                         "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
-
+                if(sort != null)
+                    slctQuery = slctQuery + sort;
                 cursor = db.rawQuery(slctQuery, new String[] {"%" + text + "%"});
             }
         }
@@ -279,6 +288,8 @@ public class DatabaseAccess {
             else if (spinner.equals("Cykl")) slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_CYKLE + " LIKE ? " +
                     "GROUP BY "  + TABLE_BOOKS + "." + TB_ID;
 
+            if(sort != null)
+                slctQuery = slctQuery + sort;
             cursor = db.rawQuery(slctQuery, new String[]{"%" + text + "%"});
         }
 
@@ -287,7 +298,7 @@ public class DatabaseAccess {
         return cursor;
 
     }
-    public Cursor ShowSelectedBooks(String text){
+    public Cursor ShowSelectedBooks(String text, String sort){
         //SQLiteDatabase db = getReadableDatabase();
 
 
@@ -307,25 +318,31 @@ public class DatabaseAccess {
         if(text.equals(TB_FAVORITE)){
             slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_FAVORITE + " = 1 " +
                     "GROUP BY " + TABLE_BOOKS + "." + TB_ID;
+            if(sort != null)
+                slctQuery = slctQuery + sort;
             cursor = db.rawQuery(slctQuery, null);
         }
         else if(text.equals(TB_ON_SHELF)){
             slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_ON_SHELF + " = 1 " +
                     "GROUP BY " + TABLE_BOOKS + "." + TB_ID;
+            if(sort != null)
+                slctQuery = slctQuery + sort;
             cursor = db.rawQuery(slctQuery, null);
         }
         else if(text.equals(TB_WISHES)){
             slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_WISHES + " = 1 " +
                     "GROUP BY " + TABLE_BOOKS + "." + TB_ID;
+            if(sort != null)
+                slctQuery = slctQuery + sort;
             cursor = db.rawQuery(slctQuery, null);
         }
         else{
             slctQuery = slctQuery + " WHERE " + TABLE_BOOKS + "." + TB_TITLE + " LIKE ? " +
                     "GROUP BY " + TABLE_BOOKS + "." + TB_ID;
-
+            if(sort != null)
+                slctQuery = slctQuery + sort;
             cursor = db.rawQuery(slctQuery, new String[]{ text });
         }
-
 
         if (cursor != null)
             cursor.move(0);

@@ -14,7 +14,7 @@
         <item android:title="Wybrane">
             <menu>
                 <item android:id="@+id/my_shelf"
-                    android:title="Moja półka"
+                    android:title="Przeczytane"
                     android:icon="@drawable/ic_storage_white_48dp_off"/>
                 <item android:id="@+id/my_favorites"
                     android:title="Moje ulubione"
