@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Kolejność dodania"
         android:id="@+id/author_id" />
-    <item android:title="Imię: Alfabetycznie"
+    <item android:title="Imię: alfabetycznie"
         android:id="@+id/first_name_asc"/>
-    <item android:title="Imię: Niealfabetycznie"
+    <item android:title="Imię: niealfabetycznie"
         android:id="@+id/first_name_desc"/>
-    <item android:title="Nazwisko: Alfabetycznie"
+    <item android:title="Nazwisko: alfabetycznie"
         android:id="@+id/last_name_asc"/>
-    <item android:title="Nazwisko: Niealfabetycznie"
+    <item android:title="Nazwisko: niealfabetycznie"
         android:id="@+id/last_name_desc"/>
 </menu>

@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +38,7 @@ public class ShowBooksDetails extends AppCompatActivity {
     ImageButton fav_button;
     ImageButton on_my_shelf_button;
     ImageButton on_wish_list_button;
+    private AlphaAnimation buttonClick = new AlphaAnimation(1.0F, 0.5F);
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,9 +207,9 @@ public class ShowBooksDetails extends AppCompatActivity {
 
    public void onClickCycle(View view){
         DatabaseAccess db = DatabaseAccess.getInstance(this);
-        db.open();
         String cycle = ((TextView)(view.findViewById(R.id.tvCycle))).getText().toString();
         if(cycle.length() != 0) {
+            view.startAnimation(buttonClick);
             Intent intent = new Intent(getApplicationContext(), ShowBooks.class);
             String tb = db.TB_CYKLE;
             intent.putExtra("Phrase", cycle);
@@ -218,7 +220,7 @@ public class ShowBooksDetails extends AppCompatActivity {
 
     public void onClickGenre(View view){
         DatabaseAccess db = DatabaseAccess.getInstance(this);
-        db.open();
+        view.startAnimation(buttonClick);
         Intent intent = new Intent (getApplicationContext(), ShowBooks.class);
         String genre = ((TextView)(view.findViewById(R.id.tvGenre))).getText().toString();
         String tb = db.TG_GENRE;
@@ -228,6 +230,7 @@ public class ShowBooksDetails extends AppCompatActivity {
     }
 
     public void onClickAuthor(View view) {
+        view.startAnimation(buttonClick);
         Intent intent = new Intent(getApplicationContext(), ShowAuthors.class);
         String autor = ((TextView) (view.findViewById(R.id.tvAuthor))).getText().toString();
         intent.putExtra("Author", autor);

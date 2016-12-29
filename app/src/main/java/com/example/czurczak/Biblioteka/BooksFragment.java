@@ -9,7 +9,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -22,6 +24,11 @@ public class BooksFragment extends android.support.v4.app.Fragment {
     Cursor cursor;
     String sort;
     String value;
+
+    int isFavorite;
+    int isOnMyShelf;
+    int isOnWishList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,12 +58,19 @@ public class BooksFragment extends android.support.v4.app.Fragment {
         String[] fromColNames = new String[]{
                 db.TB_TITLE,
                 db.KEY_AUTHOR,
-                db.TB_COVER
+                db.TB_COVER,
+                db.TB_FAVORITE,
+                db.TB_ON_SHELF,
+                db.TB_WISHES
+
         };
         int[] toViewIDs = new int[]{
                 R.id.tvTitle,
                 R.id.tvAuthor,
-                R.id.imgCover
+                R.id.imgCover,
+                R.id.imageFav,
+                R.id.imageRead,
+                R.id.imageToRead
         };
 
         final SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(
@@ -71,20 +85,40 @@ public class BooksFragment extends android.support.v4.app.Fragment {
                 @Override
                 public boolean setViewValue(View view, Cursor cursor, int colIndex) {
                     //String name = cursor.getString(colIndex);
-
-                    if (view.getId() == R.id.imgCover) {
-                    /*ImageView IV=(ImageView) view;                                                            Commented section
-                    String pack =  getApplicationContext().getPackageName();                                    set cover src to drawable
-                    int resID = getApplicationContext().getResources().getIdentifier(name, "drawable", pack);
-                    IV.setImageDrawable(getApplicationContext().getResources().getDrawable(resID));*/
-                        ((ImageView) view).setImageBitmap(db.GetImage(cursor, 0));
-                        return true;
+                    boolean binded = false;
+                    if(colIndex == cursor.getColumnIndex(db.TB_COVER)){
+                        ImageView cover = (ImageView)view.findViewById(R.id.imgCover);
+                        cover.setImageBitmap(db.GetImage(cursor, 0));
+                        binded = true;
                     }
-                    return false;
+                    if(colIndex == cursor.getColumnIndex(db.TB_FAVORITE)){
+                        ImageView fav_button = (ImageView)view.findViewById(R.id.imageFav);
+                        isFavorite = cursor.getInt(cursor.getColumnIndex(db.TB_FAVORITE));
+                        if(isFavorite == 1)
+                            fav_button.setImageResource(R.drawable.ic_favorite_white_48dp_on);
+                        else fav_button.setImageResource(R.drawable.ic_favorite_white_48dp_off);
+                        binded = true;
+                    }
+                   if(colIndex == cursor.getColumnIndex(db.TB_ON_SHELF)){
+                        ImageView on_my_shelf_button = (ImageView)view.findViewById(R.id.imageRead);
+                        isOnMyShelf = cursor.getInt(cursor.getColumnIndex(db.TB_ON_SHELF));
+                        if(isOnMyShelf == 1)
+                            on_my_shelf_button.setImageResource(R.drawable.ic_storage_white_48dp_on);
+                        else on_my_shelf_button.setImageResource(R.drawable.ic_storage_white_48dp_off);
+                        binded = true;
+                    }
+                    if(colIndex == cursor.getColumnIndex(db.TB_WISHES)){
+                        ImageView on_wish_list_button = (ImageView)view.findViewById(R.id.imageToRead);
+                        isOnWishList = cursor.getInt(cursor.getColumnIndex(db.TB_WISHES));
+                        if(isOnWishList == 1)
+                            on_wish_list_button.setImageResource(R.drawable.ic_assignment_white_48dp_on);
+                        else on_wish_list_button.setImageResource(R.drawable.ic_assignment_white_48dp_off);
+                        binded = true;
+                    }
+                    return binded;
                 }
             });
         }
-
         ListView myList = (ListView) v.findViewById(R.id.books_listview);
         myList.setAdapter(myCursorAdapter);
 
@@ -128,6 +162,22 @@ public class BooksFragment extends android.support.v4.app.Fragment {
             case R.id.title_desc:
                 db.open();
                 sort = " ORDER BY "+ db.TABLE_BOOKS + "." + db.TB_TITLE + " DESC";
+                if(value == null) cursor = db.ShowAllBooks(sort);
+                else cursor = db.ShowSelectedBooks(value, sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.year_up:
+                db.open();
+                sort = " ORDER BY "+ db.TABLE_BOOKS + "." + db.TB_YEAR + " ASC";
+                if(value == null) cursor = db.ShowAllBooks(sort);
+                else cursor = db.ShowSelectedBooks(value, sort);
+                ListViewLayout(cursor);
+                db.close();
+                return true;
+            case R.id.year_down:
+                db.open();
+                sort = " ORDER BY "+ db.TABLE_BOOKS + "." + db.TB_YEAR + " DESC";
                 if(value == null) cursor = db.ShowAllBooks(sort);
                 else cursor = db.ShowSelectedBooks(value, sort);
                 ListViewLayout(cursor);

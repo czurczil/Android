@@ -2,8 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Kolejność dodania"
         android:id="@+id/book_id" />
-    <item android:title="Tytuł: Alfabetycznie"
+    <item android:title="Tytuł: alfabetycznie"
         android:id="@+id/title_asc"/>
-    <item android:title="Tytuł: Niealfabetycznie"
+    <item android:title="Tytuł: niealfabetycznie"
         android:id="@+id/title_desc"/>
+    <item android:title="Kolejność wydania: rosnąco"
+        android:id="@+id/year_up"/>
+    <item android:title="Kolejność wydania: malejąco"
+        android:id="@+id/year_down"/>
 </menu>

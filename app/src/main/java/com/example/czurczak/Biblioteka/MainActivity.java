@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private AlphaAnimation buttonClick = new AlphaAnimation(1.0F, 0.5F);
-    private AlphaAnimation drawerClick = new AlphaAnimation(1.0F, 0.8F);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
