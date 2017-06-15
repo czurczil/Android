@@ -4,8 +4,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:onClick="onClickBooks"
-    android:clickable="true">
+    android:clickable="true"
+    android:onClick="onClickBooks">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -35,14 +35,15 @@
                     android:orientation="horizontal"
                     android:layout_gravity="right"
                     android:layout_width="100dp"
-                    android:id="@+id/book_icons">
+                    android:id="@+id/book_icons"
+                    android:layout_marginRight="20dp">
 
                     <ImageView
                         app:srcCompat="@drawable/ic_assignment_white_48dp_off"
                         android:id="@+id/imageToRead"
                         android:layout_weight="1"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"/>
 
                     <ImageView
                         app:srcCompat="@drawable/ic_storage_white_48dp_off"
@@ -56,7 +57,7 @@
                         android:id="@+id/imageFav"
                         android:layout_weight="1"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"/>
                 </LinearLayout>
 
                 <TextView

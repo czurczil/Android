@@ -1,8 +1,11 @@
 package com.example.czurczak.Biblioteka;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,12 +17,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 /**
  * Created by czurczak on 06.11.2016.
  */
 
-public class BooksFragment extends android.support.v4.app.Fragment {
+public class BooksFragment extends android.support.v4.app.Fragment{
     View v;
     Cursor cursor;
     String sort;
@@ -84,7 +88,6 @@ public class BooksFragment extends android.support.v4.app.Fragment {
             myCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
                 @Override
                 public boolean setViewValue(View view, Cursor cursor, int colIndex) {
-                    //String name = cursor.getString(colIndex);
                     boolean binded = false;
                     if(colIndex == cursor.getColumnIndex(db.TB_COVER)){
                         ImageView cover = (ImageView)view.findViewById(R.id.imgCover);
